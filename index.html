@@ -278,9 +278,22 @@
         "jobTitle":"IT Projectmanager",
         "address":{"@type":"PostalAddress","addressLocality":"Hellendoorn","addressCountry":"NL"},
         "email":"mailto:jesperrunneboom@live.nl",
-        "url":"https://username.github.io/",
+        "url":"https://jesperrunneboom.github.io/",
         "sameAs":[
           "https://www.linkedin.com/in/jesper-runneboom-245773b5/"
+        ],
+        "knowsLanguage":[
+          "nl",
+          "en",
+          "de",
+          "es"
+        ],
+        "hasCredential":[
+          {
+            "@type":"EducationalOccupationalCredential",
+            "name":"Rijbewijs B",
+            "credentialCategory":"Driving license"
+          }
         ]
       }
     </script>
@@ -395,6 +408,29 @@
             <p class="muted" style="margin:8px 0 0;">
               Beschikbaar voor: projectmanagement, informatie- & procesmanagement, implementaties/migraties.
             </p>
+          </div>
+
+          <div class="item">
+            <div class="row">
+              <strong>Talen</strong>
+              <span class="kicker">communicatie</span>
+            </div>
+            <div class="pills" role="list" aria-label="Talen en niveau" style="margin-top:8px;">
+              <span class="pill" role="listitem">Nederlands — moedertaal</span>
+              <span class="pill" role="listitem">Engels — vloeiend</span>
+              <span class="pill" role="listitem">Duits — gemiddeld</span>
+              <span class="pill" role="listitem">Spaans — beginner</span>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="row">
+              <strong>Rijbewijs</strong>
+              <span class="kicker">mobiliteit</span>
+            </div>
+            <div class="pills" role="list" aria-label="Rijbewijs" style="margin-top:8px;">
+              <span class="pill" role="listitem">Rijbewijs B</span>
+            </div>
           </div>
 
           <div class="item">
@@ -581,14 +617,14 @@
       function initAvatarFallback() {
         const img = document.getElementById("avatarImg");
         const fallback = document.getElementById("avatarFallback");
+        if (!img || !fallback) return;
+
         const showFallback = () => {
           img.style.display = "none";
           fallback.style.display = "grid";
         };
 
         fallback.style.display = "none";
-
-        if (!img || !fallback) return;
         img.addEventListener("error", showFallback);
         if (!img.complete || img.naturalWidth === 0) showFallback();
       }
