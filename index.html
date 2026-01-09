@@ -28,13 +28,20 @@
         --fg: #111827;
         --muted: rgba(17, 24, 39, 0.72);
 
-        --surface: #ffffff;
-        --card: #ffffff;
+        --card: rgba(255, 255, 255, 0.92);
+        --surface: rgba(17, 24, 39, 0.02);
 
-        --border: rgba(17, 24, 39, 0.10);
+        --border: rgba(17, 24, 39, 0.12);
         --link: #0a58ca;
         --pill: rgba(10, 88, 202, 0.10);
-        --shadow: 0 10px 26px rgba(17, 24, 39, 0.07);
+
+        --shadow: 0 10px 24px rgba(17, 24, 39, 0.06);
+        --ring: 0 0 0 3px rgba(10, 88, 202, 0.25);
+
+        --radius-lg: 18px;
+        --radius-md: 14px;
+
+        --container: 1020px;
       }
 
       [data-theme="dark"] {
@@ -42,17 +49,20 @@
         --fg: #e5e7eb;
         --muted: rgba(229, 231, 235, 0.72);
 
-        --surface: rgba(229, 231, 235, 0.06);
-        --card: rgba(229, 231, 235, 0.06);
+        --card: rgba(229, 231, 235, 0.07);
+        --surface: rgba(229, 231, 235, 0.04);
 
         --border: rgba(229, 231, 235, 0.14);
         --link: #7ab7ff;
         --pill: rgba(122, 183, 255, 0.14);
-        --shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
+
+        --shadow: 0 18px 46px rgba(0, 0, 0, 0.48);
+        --ring: 0 0 0 3px rgba(122, 183, 255, 0.22);
       }
 
       * { box-sizing: border-box; }
       html, body { height: 100%; }
+      html { scroll-behavior: smooth; }
 
       body {
         margin: 0;
@@ -61,22 +71,59 @@
         background: var(--bg);
         color: var(--fg);
         line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
       }
 
       a { color: var(--link); text-decoration: none; }
-      a:hover { text-decoration: underline; }
+      a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
       .container {
-        max-width: 1020px;
+        max-width: var(--container);
         margin: 0 auto;
-        padding: 28px 16px 56px;
+        padding: 18px 16px 56px;
+      }
+
+      .skipLink {
+        position: absolute;
+        left: -999px;
+        top: 10px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        z-index: 9999;
+      }
+      .skipLink:focus {
+        left: 12px;
+        outline: none;
+        box-shadow: var(--ring);
+      }
+
+      .topbarWrap {
+        position: sticky;
+        top: 10px;
+        z-index: 50;
+        margin-bottom: 12px;
       }
 
       .topbar {
         display: flex;
         justify-content: flex-end;
         gap: 10px;
-        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        border-radius: 999px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      @media (max-width: 900px) {
+        .topbarWrap { position: static; }
+        .topbar { border-radius: var(--radius-lg); }
       }
 
       .btn {
@@ -89,18 +136,22 @@
         cursor: pointer;
         font-size: 0.95rem;
         box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+        transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease, border-color 140ms ease;
+        font-variant-numeric: tabular-nums;
       }
-      .btn:hover { box-shadow: var(--shadow); }
+      .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+      .btn:active { transform: translateY(0); }
+      .btn:focus-visible { outline: none; box-shadow: var(--ring); }
 
       header {
         display: grid;
         grid-template-columns: 1.15fr 0.85fr;
         gap: 18px;
         align-items: start;
-        padding: 18px;
+        padding: 20px;
         border: 1px solid var(--border);
         background: var(--card);
-        border-radius: 18px;
+        border-radius: var(--radius-lg);
         box-shadow: var(--shadow);
       }
 
@@ -110,11 +161,11 @@
 
       h1 {
         margin: 0 0 6px;
-        font-size: clamp(1.85rem, 2.7vw, 2.45rem);
-        letter-spacing: -0.02em;
+        font-size: clamp(1.95rem, 2.8vw, 2.55rem);
+        letter-spacing: -0.03em;
       }
 
-      .subtitle { margin: 0 0 10px; color: var(--muted); font-weight: 600; }
+      .subtitle { margin: 0 0 10px; color: var(--muted); font-weight: 650; }
       .meta {
         display: flex;
         flex-wrap: wrap;
@@ -127,8 +178,10 @@
         color: inherit;
         text-decoration: underline;
         text-decoration-color: rgba(0,0,0,0);
+        text-underline-offset: 3px;
       }
       .meta a:hover { text-decoration-color: currentColor; }
+      .meta a:focus-visible { outline: none; box-shadow: var(--ring); border-radius: 8px; }
 
       .headerRight {
         display: grid;
@@ -138,8 +191,9 @@
       .miniCard {
         padding: 14px;
         border: 1px solid var(--border);
-        background: var(--surface);
-        border-radius: 18px;
+        background: var(--card);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
       }
 
       .avatarCard {
@@ -151,7 +205,7 @@
       .avatar {
         width: 92px;
         height: 92px;
-        border-radius: 18px;
+        border-radius: var(--radius-lg);
         border: 1px solid var(--border);
         object-fit: cover;
         box-shadow: var(--shadow);
@@ -162,7 +216,7 @@
       .avatarFallback {
         width: 92px;
         height: 92px;
-        border-radius: 18px;
+        border-radius: var(--radius-lg);
         border: 1px solid var(--border);
         display: grid;
         place-items: center;
@@ -173,21 +227,21 @@
       }
 
       .avatarMeta { min-width: 0; }
-      .focusLine { margin: 0; color: var(--muted); font-size: 0.95rem; }
+      .focusLine { margin: 0; color: var(--muted); font-size: 0.95rem; max-width: 72ch; }
 
       .card {
         margin-top: 18px;
-        padding: 18px;
+        padding: 20px;
         border: 1px solid var(--border);
         background: var(--card);
-        border-radius: 18px;
+        border-radius: var(--radius-lg);
         box-shadow: var(--shadow);
       }
 
       .grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 18px;
+        gap: 22px;
       }
       @media (max-width: 900px) {
         .grid { grid-template-columns: 1fr; }
@@ -210,21 +264,31 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 6px 10px;
+        padding: 5px 10px;
         border-radius: 999px;
         border: 1px solid var(--border);
         background: var(--pill);
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         white-space: nowrap;
+        transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+      }
+      .pill:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
+      }
+      [data-theme="dark"] .pill:hover {
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
       }
 
       .item {
         padding: 12px 12px;
         border: 1px solid var(--border);
-        border-radius: 14px;
+        border-radius: var(--radius-md);
         background: var(--surface);
+        transition: transform 160ms ease, box-shadow 160ms ease;
       }
       .item + .item { margin-top: 10px; }
+      .item:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
 
       .row {
         display: flex;
@@ -233,11 +297,12 @@
         flex-wrap: wrap;
       }
 
-      .kicker { font-size: 0.95rem; color: var(--muted); }
+      .kicker { font-size: 0.95rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 
       .tagline {
         margin: 10px 0 0;
         font-size: 1.02rem;
+        max-width: 72ch;
       }
 
       .badgeRow {
@@ -259,14 +324,79 @@
         flex-wrap: wrap;
       }
 
+      /* Reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .btn, .pill, .item { transition: none !important; }
+        .btn:hover, .pill:hover, .item:hover { transform: none !important; }
+      }
+
+      /* PRINT / PDF (A4) — compact + section page breaks */
+      @page {
+        size: A4;
+        margin: 10mm;
+      }
+
       @media print {
-        .topbar { display: none !important; }
-        a { color: #000; text-decoration: none; }
-        body { background: #fff; }
-        header, .card { box-shadow: none !important; }
-        .container { padding: 0; }
-        .card { break-inside: avoid; }
-        .item { break-inside: avoid; }
+        .topbarWrap, .skipLink { display: none !important; }
+
+        body {
+          background: #fff !important;
+          color: #000 !important;
+          font-size: 11pt;
+          line-height: 1.35;
+        }
+
+        a { color: #000 !important; text-decoration: none !important; }
+
+        .container {
+          max-width: 780px;
+          padding: 0 !important;
+        }
+
+        header, .card, .miniCard, .item {
+          box-shadow: none !important;
+          background: #fff !important;
+          border-color: rgba(0,0,0,0.18) !important;
+        }
+
+        /* Predictable flow */
+        header { grid-template-columns: 1fr !important; padding: 12px !important; }
+        .grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+
+        .card { margin-top: 10px !important; padding: 12px !important; }
+        .miniCard { padding: 10px !important; }
+        .item { padding: 8px 10px !important; }
+
+        h1 { font-size: 18pt !important; margin: 0 0 4px !important; }
+        h2 { font-size: 12.25pt !important; margin: 0 0 6px !important; }
+        h3 { font-size: 11.25pt !important; margin: 0 0 4px !important; }
+
+        .subtitle { margin: 0 0 6px !important; }
+        .tagline { font-size: 10.75pt !important; margin-top: 8px !important; }
+        .kicker, .muted { color: #111 !important; }
+
+        ul { margin: 6px 0 0 16px !important; }
+        li { margin: 4px 0 !important; }
+
+        .pill { padding: 3px 8px !important; font-size: 9.75pt !important; }
+        .badgeRow { margin-top: 8px !important; gap: 6px !important; }
+        .pills { gap: 6px !important; }
+
+        /* Avoid ugly splits */
+        .card, header, .item, footer {
+          break-inside: avoid;
+          page-break-inside: avoid;
+        }
+
+        /* Page breaks per section */
+        .printBreakBefore {
+          break-before: page;
+          page-break-before: always;
+        }
+
+        /* Keep footer tight */
+        footer { margin-top: 12px !important; padding-top: 8px !important; }
       }
     </style>
 
@@ -300,285 +430,291 @@
   </head>
 
   <body>
-    <div class="container">
-      <div class="topbar">
-        <button class="btn" id="themeBtn" type="button" aria-label="Thema wisselen">🌗 Thema</button>
-        <button class="btn" id="printBtn" type="button" aria-label="Print als PDF">🖨️ PDF</button>
+    <a class="skipLink" href="#main">Direct naar inhoud</a>
+
+    <div class="container" id="top">
+      <div class="topbarWrap" aria-label="Acties">
+        <div class="topbar">
+          <button class="btn" id="themeBtn" type="button" aria-label="Thema wisselen" aria-pressed="false">🌗 Thema</button>
+          <button class="btn" id="pdfBtn" type="button" aria-label="Download als PDF">📄 Download PDF</button>
+          <button class="btn" id="printBtn" type="button" aria-label="Print">🖨️ Print</button>
+        </div>
       </div>
 
-      <header>
-        <div>
-          <h1>Jesper Runneboom</h1>
-          <p class="subtitle">IT Projectmanager • Publieke sector • Informatie- en procesmanagement</p>
+      <main id="main">
+        <header>
+          <div>
+            <h1>Jesper Runneboom</h1>
+            <p class="subtitle">IT Projectmanager • Publieke sector • Informatie- en procesmanagement</p>
 
-          <div class="meta" aria-label="Contactgegevens">
-            <span>📍 Hellendoorn, NL</span>
-            <span>✉️ <a href="mailto:jesperrunneboom@live.nl" id="emailLink">jesperrunneboom@live.nl</a></span>
-            <span>📞 <a href="tel:+31618933307">+31 6 189 333 07</a></span>
-            <span>🔗 <a href="https://www.linkedin.com/in/jesper-runneboom-245773b5/" rel="me noopener">LinkedIn</a></span>
-          </div>
+            <div class="meta" aria-label="Contactgegevens">
+              <span>📍 Hellendoorn, NL</span>
+              <span>✉️ <a href="mailto:jesperrunneboom@live.nl" id="emailLink">jesperrunneboom@live.nl</a></span>
+              <span>📞 <a href="tel:+31618933307">+31 6 189 333 07</a></span>
+              <span>🔗 <a href="https://www.linkedin.com/in/jesper-runneboom-245773b5/" rel="me noopener">LinkedIn</a></span>
+            </div>
 
-          <p class="tagline">
-            <strong>Ik realiseer duurzame verbeteringen in de publieke sector door techniek, proces en mensen te verbinden.</strong>
-            Sterk in omgevingsmanagement, besluitvorming, documentatie en het begeleiden van verandering rondom DMS/zaaksystemen.
-            Mijn meest recente bijdrage is het realiseren van succesvolle migratietrajecten naar de cloud.
-          </p>
+            <p class="tagline">
+              <strong>Ik realiseer duurzame verbeteringen in de publieke sector door techniek, proces en mensen te verbinden.</strong>
+              Sterk in omgevingsmanagement, besluitvorming, documentatie en het begeleiden van verandering rondom DMS/zaaksystemen.
+              Mijn meest recente bijdrage is het realiseren van succesvolle migratietrajecten naar de cloud.
+            </p>
 
-          <div class="badgeRow" aria-label="Snelle samenvatting">
-            <span class="pill">PRINCE2</span>
-            <span class="pill">Zaaksystemen (Mozard/Atabase)</span>
-            <span class="pill">Procesoptimalisatie</span>
-            <span class="pill">Overheidsklanten</span>
-            <span class="pill">Jira</span>
-            <span class="pill">Sturen ontwikkelteams</span>
-          </div>
-        </div>
-
-        <div class="headerRight">
-          <div class="miniCard">
-            <div class="avatarCard">
-              <!-- Later: zet je foto op /assets/jesper.jpg (nu is er een nette placeholder) -->
-              <img
-                class="avatar"
-                id="avatarImg"
-                src="assets/jesper.jpg"
-                alt="Profielfoto van Jesper Runneboom"
-                width="92"
-                height="92"
-                loading="eager"
-                decoding="async"
-              />
-              <div class="avatarFallback" id="avatarFallback" aria-label="Initialen Jesper Runneboom">JR</div>
-
-              <div class="avatarMeta">
-                <strong>Focus</strong>
-                <p class="focusLine">Continuïteit • sturing • heldere communicatie</p>
-                <p class="focusLine">Klanten: gemeenten, ministeries, veiligheidsregio’s</p>
-              </div>
+            <div class="badgeRow" aria-label="Snelle samenvatting">
+              <span class="pill">PRINCE2</span>
+              <span class="pill">Zaaksystemen (Mozard/Atabase)</span>
+              <span class="pill">Procesoptimalisatie</span>
+              <span class="pill">Overheidsklanten</span>
+              <span class="pill">Jira</span>
+              <span class="pill">Sturen ontwikkelteams</span>
             </div>
           </div>
 
-          <div class="card" style="margin-top:0;">
-            <h2>Kernpunten</h2>
-            <ul>
-              <li><strong>Documentatie:</strong> sterk gericht op het realiseren van gestructureerde werkwijzen.</li>
-              <li><strong>Aanspreekpunt</strong> voor meerdere klanten; verantwoordelijkheden worden uitgebreid.</li>
-              <li><strong>Rolontwikkeling:</strong> sturende rol richting het ontwikkelteam (prioriteiten, afstemming, voortgang bewaken).</li>
-              <li><strong>WO Master (Geschiedenis):</strong> sterke onderzoeks-/analysebasis.</li>
-            </ul>
+          <div class="headerRight">
+            <div class="miniCard">
+              <div class="avatarCard">
+                <img
+                  class="avatar"
+                  id="avatarImg"
+                  src="assets/jesper.jpg"
+                  alt="Profielfoto van Jesper Runneboom"
+                  width="92"
+                  height="92"
+                  loading="eager"
+                  decoding="async"
+                />
+                <div class="avatarFallback" id="avatarFallback" aria-label="Initialen Jesper Runneboom">JR</div>
+
+                <div class="avatarMeta">
+                  <strong>Focus</strong>
+                  <p class="focusLine">Continuïteit • sturing • heldere communicatie</p>
+                  <p class="focusLine">Klanten: gemeenten, ministeries, veiligheidsregio’s</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:0;">
+              <h2>Kernpunten</h2>
+              <ul>
+                <li><strong>Documentatie:</strong> sterk gericht op het realiseren van gestructureerde werkwijzen.</li>
+                <li><strong>Aanspreekpunt</strong> voor meerdere klanten; verantwoordelijkheden worden uitgebreid.</li>
+                <li><strong>Rolontwikkeling:</strong> sturende rol richting het ontwikkelteam (prioriteiten, afstemming, voortgang bewaken).</li>
+                <li><strong>WO Master (Geschiedenis):</strong> sterke onderzoeks-/analysebasis.</li>
+              </ul>
+            </div>
           </div>
+        </header>
+
+        <div class="grid">
+          <section class="card" aria-labelledby="skills">
+            <h2 id="skills">Kerncompetenties</h2>
+            <div class="pills" role="list">
+              <span class="pill" role="listitem">Omgevingsmanagement</span>
+              <span class="pill" role="listitem">Projectplanning & sturing</span>
+              <span class="pill" role="listitem">Risico- & knelpuntenbeheer</span>
+              <span class="pill" role="listitem">Procesanalyse & optimalisatie</span>
+              <span class="pill" role="listitem">Eisen & documentatie</span>
+              <span class="pill" role="listitem">Verandering & adoptie</span>
+              <span class="pill" role="listitem">Faciliteren & presenteren</span>
+            </div>
+
+            <h2 style="margin-top:14px;">Domein & hulpmiddelen</h2>
+            <div class="pills" role="list">
+              <span class="pill" role="listitem">Zaaksystemen</span>
+              <span class="pill" role="listitem">DMS</span>
+              <span class="pill" role="listitem">Archiefsystemen</span>
+              <span class="pill" role="listitem">M365</span>
+              <span class="pill" role="listitem">Jira</span>
+              <span class="pill" role="listitem">Linux (basis)</span>
+              <span class="pill" role="listitem">Adobe Suite</span>
+            </div>
+          </section>
+
+          <section class="card" aria-labelledby="contact">
+            <h2 id="contact">Contact & werkwijze</h2>
+
+            <div class="item">
+              <div class="row">
+                <strong>Contact</strong>
+                <span class="kicker">
+                  <button class="btn" id="copyEmailBtn" type="button">📋 Kopieer email</button>
+                </span>
+              </div>
+              <p class="muted" style="margin:8px 0 0;">
+                Beschikbaar voor: projectmanagement, informatie- & procesmanagement, implementaties/migraties.
+              </p>
+            </div>
+
+            <div class="item">
+              <div class="row">
+                <strong>Talen</strong>
+                <span class="kicker">communicatie</span>
+              </div>
+              <div class="pills" role="list" aria-label="Talen en niveau" style="margin-top:8px;">
+                <span class="pill" role="listitem">Nederlands - moedertaal</span>
+                <span class="pill" role="listitem">Engels - vloeiend</span>
+                <span class="pill" role="listitem">Duits - gemiddeld</span>
+                <span class="pill" role="listitem">Spaans - beginner</span>
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="row">
+                <strong>Rijbewijs</strong>
+                <span class="kicker">mobiliteit</span>
+              </div>
+              <div class="pills" role="list" aria-label="Rijbewijs" style="margin-top:8px;">
+                <span class="pill" role="listitem">Rijbewijs B</span>
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="row">
+                <strong>Certificering</strong>
+                <span class="kicker">kort</span>
+              </div>
+              <ul>
+                <li>PRINCE2 (gecertificeerd)</li>
+              </ul>
+            </div>
+
+            <div class="item">
+              <div class="row">
+                <strong>Werkwijze</strong>
+                <span class="kicker">praktisch</span>
+              </div>
+              <ul>
+                <li>Heldere scope & planning, inclusief afhankelijkheden</li>
+                <li>Besluitvorming vastleggen (keuzes/afwegingen transparant)</li>
+                <li>Opleverdossier & overdracht: beheerafspraken, documentatie, nazorg</li>
+              </ul>
+            </div>
+          </section>
         </div>
-      </header>
 
-      <div class="grid">
-        <section class="card" aria-labelledby="skills">
-          <h2 id="skills">Kerncompetenties</h2>
-          <div class="pills" role="list">
-            <span class="pill" role="listitem">Omgevingsmanagement</span>
-            <span class="pill" role="listitem">Projectplanning & sturing</span>
-            <span class="pill" role="listitem">Risico- & knelpuntenbeheer</span>
-            <span class="pill" role="listitem">Procesanalyse & optimalisatie</span>
-            <span class="pill" role="listitem">Eisen & documentatie</span>
-            <span class="pill" role="listitem">Verandering & adoptie</span>
-            <span class="pill" role="listitem">Faciliteren & presenteren</span>
-          </div>
+        <section class="card printBreakBefore" aria-labelledby="experience">
+          <h2 id="experience">Ervaring</h2>
 
-          <h2 style="margin-top:14px;">Domein & hulpmiddelen</h2>
-          <div class="pills" role="list">
-            <span class="pill" role="listitem">Zaaksystemen</span>
-            <span class="pill" role="listitem">DMS</span>
-            <span class="pill" role="listitem">Archiefsystemen</span>
-            <span class="pill" role="listitem">M365</span>
-            <span class="pill" role="listitem">Jira</span>
-            <span class="pill" role="listitem">Linux (basis)</span>
-            <span class="pill" role="listitem">Adobe Suite</span>
-          </div>
+          <article class="item">
+            <div class="row">
+              <div>
+                <h3><a href="https://www.atabix.nl/" rel="noopener">Atabix B.V.</a> - Projectmanager</h3>
+                <div class="kicker">Mei 2025 – heden • Amsterdam / Arnhem (Hybride)</div>
+              </div>
+              <div class="kicker">Zaaksystemen • migraties • omgevingsmanagement</div>
+            </div>
+            <ul>
+              <li>Projectmanagement voor zaaksysteem <strong>Mozard</strong> (scope, planning, afstemming, oplevering).</li>
+              <li>Coördinatie <strong>on-premise naar SaaS</strong> migraties voor gemeenten <strong>Heemstede</strong>, <strong>Bloemendaal</strong> en <strong>Veenendaal</strong>.</li>
+              <li>Documentatie & overdraagbaarheid: beslislog, afspraken, opleverdossier en overdracht richting beheer.</li>
+              <li>
+                <strong>Rolontwikkeling:</strong> voor meerdere klanten <strong>direct aanspreekpunt</strong>; groei naar <strong>sturende rol richting het ontwikkelteam van Mozard</strong>
+                (prioriteiten, afstemmen in Jira, voortgang bewaken); maatwerk coördineren voor het zaaksysteem Atabase.
+              </li>
+            </ul>
+          </article>
+
+          <article class="item">
+            <div class="row">
+              <div>
+                <h3><a href="https://www.mozard.nl/" rel="noopener">Mozard B.V.</a> - Consultant informatie- & procesmanagement</h3>
+                <div class="kicker">Mei 2024 – Mei 2025 • Amsterdam / Arnhem (Hybride)</div>
+              </div>
+              <div class="kicker">Procesoptimalisatie • functionele inrichting</div>
+            </div>
+            <ul>
+              <li>Ondersteuning product <strong>Mozard</strong> en omgevingsmanagement.</li>
+              <li>Functioneel consultant: <strong>Veiligheidsregio Rotterdam Rijnmond</strong>.</li>
+              <li>Functioneel consultant: <strong>Ministerie van SZW</strong> (directie Cao).</li>
+              <li>Opleveringen: procesafspraken, werkinstructies, afstemming van eisen en acceptatie.</li>
+            </ul>
+          </article>
         </section>
 
-        <section class="card" aria-labelledby="contact">
-          <h2 id="contact">Contact & werkwijze</h2>
+        <section class="card printBreakBefore" aria-labelledby="projects">
+          <h2 id="projects">Uitgelicht project</h2>
+
+          <article class="item">
+            <div class="row">
+              <div>
+                <h3>Gemeenten Heemstede, Bloemendaal & Veenendaal - Migratie Mozard on-premise naar SaaS</h3>
+                <div class="kicker">Coördinatie technische migratie, borging kennis & overdracht</div>
+              </div>
+            </div>
+            <ul>
+              <li>Uitdaging: vergelijkbare doelen, verschillende uitgangssituaties per organisatie (inrichting/afhankelijkheden/planning).</li>
+              <li>Aanpak: planning & afstemming, risico’s zichtbaar gemaakt, keuzes vastgelegd, opleverdossier opgeleverd.</li>
+              <li>Resultaat: migraties succesvol afgerond met duidelijke beheerafspraken en overdraagbare documentatie.</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="card printBreakBefore" aria-labelledby="education" id="education">
+          <h2 id="educationTitle">Opleiding</h2>
 
           <div class="item">
             <div class="row">
-              <strong>Contact</strong>
-              <span class="kicker">
-                <button class="btn" id="copyEmailBtn" type="button">📋 Kopieer email</button>
-              </span>
+              <div>
+                <h3>Master Geschiedenis - Rijksuniversiteit Groningen</h3>
+                <div class="kicker">2021 - 2023</div>
+              </div>
+              <div class="kicker">Moderne geschiedenis & ideologie</div>
             </div>
             <p class="muted" style="margin:8px 0 0;">
-              Beschikbaar voor: projectmanagement, informatie- & procesmanagement, implementaties/migraties.
+              Gemiddeld cijfer: 7,7.
+              Masterthesis:
+              <a href="https://arts.studenttheses.ub.rug.nl/33691/" rel="noopener">
+                Tussen Marxisme en communisme: Een schizoanalytisch perspectief op terreur en de Bolsjewistische ideologie
+              </a>.
+              “Learning Histories”: onderzoek naar beleid en doorwerking naar hedendaagse werkzaamheden in de publieke sector.
             </p>
           </div>
 
           <div class="item">
             <div class="row">
-              <strong>Talen</strong>
-              <span class="kicker">communicatie</span>
+              <div>
+                <h3>Bachelor Geschiedenis - Rijksuniversiteit Groningen</h3>
+                <div class="kicker">2017 - 2021</div>
+              </div>
+              <div class="kicker">Minor: Filosofie</div>
             </div>
-            <div class="pills" role="list" aria-label="Talen en niveau" style="margin-top:8px;">
-              <span class="pill" role="listitem">Nederlands - moedertaal</span>
-              <span class="pill" role="listitem">Engels - vloeiend</span>
-              <span class="pill" role="listitem">Duits - gemiddeld</span>
-              <span class="pill" role="listitem">Spaans - beginner</span>
-            </div>
+            <p class="muted" style="margin:8px 0 0;">
+              Gemiddeld cijfer: 6,9. Thesis over Sovjetcommunisme en staatsterreur.
+            </p>
           </div>
 
           <div class="item">
             <div class="row">
-              <strong>Rijbewijs</strong>
-              <span class="kicker">mobiliteit</span>
+              <div>
+                <h3>Propedeuse Social Work - Hanzehogeschool Groningen</h3>
+                <div class="kicker">2016 – 2018</div>
+              </div>
+              <div class="kicker">Propedeuse (60 EC)</div>
             </div>
-            <div class="pills" role="list" aria-label="Rijbewijs" style="margin-top:8px;">
-              <span class="pill" role="listitem">Rijbewijs B</span>
-            </div>
+            <p class="muted" style="margin:8px 0 0;">
+              Behaald binnen een jaar, met focus op psychologische theorie en gespreksvoering.
+            </p>
           </div>
 
           <div class="item">
             <div class="row">
-              <strong>Certificering</strong>
-              <span class="kicker">kort</span>
+              <div>
+                <h3>MBO Grafisch Ontwerpen - Deltion College (Zwolle)</h3>
+                <div class="kicker">2012 – 2016</div>
+              </div>
+              <div class="kicker">Opleidingstraject afgerond</div>
             </div>
-            <ul>
-              <li>PRINCE2 (gecertificeerd)</li>
-            </ul>
-          </div>
-
-          <div class="item">
-            <div class="row">
-              <strong>Werkwijze</strong>
-              <span class="kicker">praktisch</span>
-            </div>
-            <ul>
-              <li>Heldere scope & planning, inclusief afhankelijkheden</li>
-              <li>Besluitvorming vastleggen (keuzes/afwegingen transparant)</li>
-              <li>Opleverdossier & overdracht: beheerafspraken, documentatie, nazorg</li>
-            </ul>
+            <p class="muted" style="margin:8px 0 0;">
+              Vierjarige opleiding met drie stageperiodes in de reclamesector.
+            </p>
           </div>
         </section>
-      </div>
 
-      <section class="card" aria-labelledby="experience">
-        <h2 id="experience">Ervaring</h2>
-
-        <article class="item">
-          <div class="row">
-            <div>
-              <h3><a href="https://www.atabix.nl/" rel="noopener">Atabix B.V.</a> - Projectmanager</h3>
-              <div class="kicker">Mei 2025 – heden • Amsterdam / Arnhem (Hybride)</div>
-            </div>
-            <div class="kicker">Zaaksystemen • migraties • omgevingsmanagement</div>
-          </div>
-          <ul>
-            <li>Projectmanagement voor zaaksysteem <strong>Mozard</strong> (scope, planning, afstemming, oplevering).</li>
-            <li>Coördinatie <strong>on-premise naar SaaS</strong> migraties voor gemeenten <strong>Heemstede</strong>, <strong>Bloemendaal</strong> en <strong>Veenendaal</strong>.</li>
-            <li>Documentatie & overdraagbaarheid: beslislog, afspraken, opleverdossier en overdracht richting beheer.</li>
-            <li>
-              <strong>Rolontwikkeling:</strong> voor meerdere klanten <strong>direct aanspreekpunt</strong>; groei naar <strong>sturende rol richting het ontwikkelteam van Mozard</strong>
-              (prioriteiten, afstemmen in Jira, voortgang bewaken); maatwerk coördineren voor het zaaksysteem Atabase.
-            </li>
-          </ul>
-        </article>
-
-        <article class="item">
-          <div class="row">
-            <div>
-              <h3><a href="https://www.mozard.nl/" rel="noopener">Mozard B.V.</a> - Consultant informatie- & procesmanagement</h3>
-              <div class="kicker">Mei 2024 – Mei 2025 • Amsterdam / Arnhem (Hybride)</div>
-            </div>
-            <div class="kicker">Procesoptimalisatie • functionele inrichting</div>
-          </div>
-          <ul>
-            <li>Ondersteuning product <strong>Mozard</strong> en omgevingsmanagement.</li>
-            <li>Functioneel consultant: <strong>Veiligheidsregio Rotterdam Rijnmond</strong>.</li>
-            <li>Functioneel consultant: <strong>Ministerie van SZW</strong> (directie Cao).</li>
-            <li>Opleveringen: procesafspraken, werkinstructies, afstemming van eisen en acceptatie.</li>
-          </ul>
-        </article>
-      </section>
-
-      <section class="card" aria-labelledby="projects">
-        <h2 id="projects">Uitgelicht project</h2>
-
-        <article class="item">
-          <div class="row">
-            <div>
-              <h3>Gemeenten Heemstede, Bloemendaal & Veenendaal - Migratie Mozard on-premise naar SaaS</h3>
-              <div class="kicker">Coördinatie technische migratie, borging kennis & overdracht</div>
-            </div>
-          </div>
-          <ul>
-            <li>Uitdaging: vergelijkbare doelen, verschillende uitgangssituaties per organisatie (inrichting/afhankelijkheden/planning).</li>
-            <li>Aanpak: planning & afstemming, risico’s zichtbaar gemaakt, keuzes vastgelegd, opleverdossier opgeleverd.</li>
-            <li>Resultaat: migraties succesvol afgerond met duidelijke beheerafspraken en overdraagbare documentatie.</li>
-          </ul>
-        </article>
-      </section>
-
-      <section class="card" aria-labelledby="education">
-        <h2 id="education">Opleiding</h2>
-
-        <div class="item">
-          <div class="row">
-            <div>
-              <h3>Master Geschiedenis - Rijksuniversiteit Groningen</h3>
-              <div class="kicker">2021 - 2023</div>
-            </div>
-            <div class="kicker">Moderne geschiedenis & ideologie</div>
-          </div>
-          <p class="muted" style="margin:8px 0 0;">
-            Gemiddeld cijfer: 7,7.
-            Masterthesis:
-            <a href="https://arts.studenttheses.ub.rug.nl/33691/" rel="noopener">
-              Tussen Marxisme en communisme: Een schizoanalytisch perspectief op terreur en de Bolsjewistische ideologie
-            </a>.
-            “Learning Histories”: onderzoek naar beleid en doorwerking naar hedendaagse werkzaamheden in de publieke sector.
-          </p>
-        </div>
-
-        <div class="item">
-          <div class="row">
-            <div>
-              <h3>Bachelor Geschiedenis - Rijksuniversiteit Groningen</h3>
-              <div class="kicker">2017 - 2021</div>
-            </div>
-            <div class="kicker">Minor: Filosofie</div>
-          </div>
-          <p class="muted" style="margin:8px 0 0;">
-            Gemiddeld cijfer: 6,9. Thesis over Sovjetcommunisme en staatsterreur.
-          </p>
-        </div>
-
-        <div class="item">
-          <div class="row">
-            <div>
-              <h3>Propedeuse Social Work - Hanzehogeschool Groningen</h3>
-              <div class="kicker">2016 – 2018</div>
-            </div>
-            <div class="kicker">Propedeuse (60 EC)</div>
-          </div>
-          <p class="muted" style="margin:8px 0 0;">
-            Behaald binnen een jaar, met focus op psychologische theorie en gespreksvoering.
-          </p>
-        </div>
-
-        <div class="item">
-          <div class="row">
-            <div>
-              <h3>MBO Grafisch Ontwerpen - Deltion College (Zwolle)</h3>
-              <div class="kicker">2012 – 2016</div>
-            </div>
-            <div class="kicker">Opleidingstraject afgerond</div>
-          </div>
-          <p class="muted" style="margin:8px 0 0;">
-            Vierjarige opleiding met drie stageperiodes in de reclamesector.
-          </p>
-        </div>
-      </section>
-
-      <footer>
-        <span>© <span id="year"></span> Jesper Runneboom</span>
-        <span class="muted">GitHub Pages • <a href="#" id="backToTop">Naar boven</a></span>
-      </footer>
+        <footer>
+          <span>© <span id="year"></span> Jesper Runneboom</span>
+          <span class="muted">GitHub Pages • <a href="#" id="backToTop">Naar boven</a></span>
+        </footer>
+      </main>
     </div>
 
     <script>
@@ -601,9 +737,18 @@
         applyTheme(next);
       }
 
+      function syncThemeBtn() {
+        const btn = document.getElementById("themeBtn");
+        if (!btn) return;
+        const theme = document.documentElement.getAttribute("data-theme") || "light";
+        btn.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+        btn.title = theme === "dark" ? "Donker thema (klik voor licht)" : "Licht thema (klik voor donker)";
+      }
+
       function copyEmail() {
         const email = document.getElementById("emailLink").textContent?.trim() || "";
         if (!email) return;
+
         navigator.clipboard?.writeText(email).catch(() => {
           const textarea = document.createElement("textarea");
           textarea.value = email;
@@ -629,17 +774,40 @@
         if (!img.complete || img.naturalWidth === 0) showFallback();
       }
 
+      function openPdfPrintDialog() {
+        document.title = "Jesper Runneboom - CV";
+        window.print();
+      }
+
       applyTheme(getPreferredTheme());
+      syncThemeBtn();
       initAvatarFallback();
 
-      document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+      document.getElementById("themeBtn").addEventListener("click", () => {
+        toggleTheme();
+        syncThemeBtn();
+      });
+
+      document.getElementById("pdfBtn").addEventListener("click", openPdfPrintDialog);
       document.getElementById("printBtn").addEventListener("click", () => window.print());
       document.getElementById("copyEmailBtn").addEventListener("click", copyEmail);
+
       document.getElementById("year").textContent = String(new Date().getFullYear());
       document.getElementById("backToTop").addEventListener("click", (e) => {
         e.preventDefault();
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
       });
+
+      const media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+      if (media) {
+        media.addEventListener("change", () => {
+          const saved = localStorage.getItem(THEME_KEY);
+          if (saved === "light" || saved === "dark") return;
+          applyTheme(getPreferredTheme());
+          syncThemeBtn();
+        });
+      }
     </script>
   </body>
 </html>
