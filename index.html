@@ -10,7 +10,6 @@
     />
     <meta name="robots" content="index,follow" />
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Jesper Runneboom - IT Projectmanager (CV)" />
     <meta
@@ -127,32 +126,34 @@
 
       header { padding: 18px 0 6px; }
 
+      /* HERO: text left, big portrait right (same height as left block) */
       .hero {
         display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 16px;
-        align-items: start;
+        grid-template-columns: 1fr clamp(190px, 22vw, 260px);
+        gap: 18px;
+        align-items: stretch; /* key: lets right side stretch to left height */
       }
 
-      @media (max-width: 640px) {
-        .hero { grid-template-columns: 1fr; }
-        .avatarWrap { justify-self: start; }
+      .heroText {
+        min-width: 0;
       }
 
       .avatarWrap {
-        width: 96px;
-        height: 96px;
+        width: 100%;
+        height: 100%;            /* key: match hero row height */
+        min-height: 190px;       /* ensures decent portrait size even with short text */
         border-radius: var(--radius);
         border: 1px solid var(--border);
         overflow: hidden;
         position: relative;
-        flex: 0 0 auto;
+        background: transparent;
       }
 
       .avatarImg {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: 50% 25%;
         display: block;
       }
 
@@ -163,8 +164,19 @@
         place-items: center;
         font-weight: 900;
         letter-spacing: -0.04em;
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         background: linear-gradient(180deg, rgba(10, 88, 202, 0.12), rgba(10, 88, 202, 0.03));
+      }
+
+      @media (max-width: 760px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .avatarWrap {
+          height: 220px; /* banner-ish on mobile */
+          min-height: 220px;
+          order: -1;     /* image above text */
+        }
       }
 
       h1 {
@@ -358,6 +370,9 @@
 
         .entry, .callout, footer { break-inside: avoid; page-break-inside: avoid; }
         .printBreakBefore { break-before: page; page-break-before: always; }
+
+        /* In print, keep portrait reasonable */
+        .avatarWrap { height: 230px !important; min-height: 230px !important; }
       }
     </style>
 
@@ -384,7 +399,7 @@
 
     <div class="topbarWrap" aria-label="Acties">
       <div class="topbar">
-        <button class="btn" id="themeBtn" type="button" aria-label="Thema wisselen" aria-pressed="false">Thema</button>
+        <button class="btn" id="themeBtn" type="button" aria-label="Thema wisselen" aria-pressed="false">Donker</button>
         <button class="btn" id="pdfBtn" type="button" aria-label="Download als PDF">Download PDF</button>
       </div>
     </div>
@@ -393,21 +408,7 @@
       <main id="main">
         <header>
           <div class="hero">
-            <div class="avatarWrap" aria-label="Profielfoto">
-              <img
-                class="avatarImg"
-                id="avatarImg"
-                src="assets/jesper.jpg"
-                alt="Profielfoto van Jesper Runneboom"
-                width="96"
-                height="96"
-                loading="eager"
-                decoding="async"
-              />
-              <div class="avatarFallback" id="avatarFallback" aria-hidden="true" style="display:none;">JR</div>
-            </div>
-
-            <div>
+            <div class="heroText">
               <h1>Jesper Runneboom</h1>
               <p class="subtitle">IT Projectmanager • Publieke sector • Informatie- en procesmanagement</p>
 
@@ -431,6 +432,20 @@
                 <span class="tag">Jira</span>
                 <span class="tag">Opleverdossier</span>
               </div>
+            </div>
+
+            <div class="avatarWrap" aria-label="Profielfoto">
+              <img
+                class="avatarImg"
+                id="avatarImg"
+                src="assets/jesper.jpg"
+                alt="Profielfoto van Jesper Runneboom"
+                width="260"
+                height="320"
+                loading="eager"
+                decoding="async"
+              />
+              <div class="avatarFallback" id="avatarFallback" aria-hidden="true" style="display:none;">JR</div>
             </div>
           </div>
         </header>
@@ -506,7 +521,7 @@
                 <span class="parLabel">Aanpak</span>
                 <p class="parText">
                   Planning en afstemming ingericht, risico’s expliciet gemaakt, keuzes vastgelegd (beslislog), en overdraagbaarheid geborgd met opleverdossier en beheerafspraken.
-                  Daarnaast: prioriteiten en voortgang richting ontwikkelteam bewaakt (Jira) en maatwerk gecoördineerd voor Atabase.
+                  Daarnaast: prioriteiten en voortgang richting ontwikkelteam bewaakt (Jira) en maatwerk gecoördineerd.
                 </p>
               </div>
 
@@ -540,8 +555,7 @@
               <div class="parBlock">
                 <span class="parLabel">Aanpak</span>
                 <p class="parText">
-                  Functioneel ingericht en begeleid met stakeholders (o.a. Veiligheidsregio Rotterdam Rijnmond, Ministerie van SZW — directie Cao).
-                  Eisen uitgewerkt, werkinstructies opgesteld en acceptatie/oplevering gefaciliteerd.
+                  Functioneel ingericht en begeleid met stakeholders. Eisen uitgewerkt, werkinstructies opgesteld en acceptatie/oplevering gefaciliteerd.
                 </p>
               </div>
 
@@ -569,8 +583,8 @@
 
             <div class="calloutActions">
               <button class="btn" id="copyEmailBtn" type="button" aria-label="Kopieer email">Kopieer e-mail</button>
-              <a class="btn" href="mailto:jesperrunneboom@live.nl" style="display:inline-flex; align-items:center;">Mail</a>
-              <a class="btn" href="tel:+31618933307" style="display:inline-flex; align-items:center;">Bel</a>
+              <a class="btn" href="mailto:jesperrunneboom@live.nl">Mail</a>
+              <a class="btn" href="tel:+31618933307">Bel</a>
             </div>
           </div>
         </section>
@@ -636,9 +650,7 @@
         if (!img || !fallback) return;
 
         const candidates = [
-          // Works on GitHub Pages when assets/ is alongside index.html
           new URL("assets/jesper.jpg", document.baseURI).toString(),
-          // Fallback if assets path is broken in a preview environment
           "https://raw.githubusercontent.com/JesperRunneboom/jesperrunneboom.github.io/main/assets/jesper.jpg",
         ];
 
@@ -660,11 +672,8 @@
         };
 
         img.addEventListener("error", tryNext);
-
-        // Ensure first candidate is set (avoid accidental blob URLs)
         img.src = candidates[0];
 
-        // If browser already decided it's broken quickly:
         if (img.complete && img.naturalWidth === 0) tryNext();
       }
 
