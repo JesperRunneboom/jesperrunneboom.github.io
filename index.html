@@ -9,35 +9,20 @@
       content="Jesper Runneboom - IT Projectmanager • Publieke sector • Informatie- en procesmanagement."
     />
     <meta name="robots" content="index,follow" />
-    <link rel="canonical" href="https://jesperrunneboom.github.io/" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Jesper Runneboom - IT Projectmanager (CV)" />
-    <meta property="og:description" content="IT Projectmanager • Publieke sector • Informatie- en procesmanagement." />
+    <meta
+      property="og:description"
+      content="IT Projectmanager • Publieke sector • Informatie- en procesmanagement."
+    />
     <meta property="og:url" content="https://jesperrunneboom.github.io/" />
     <meta property="og:locale" content="nl_NL" />
 
-    <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)" />
-
     <title>Jesper Runneboom - IT Projectmanager (CV)</title>
-
-    <script>
-      (function () {
-        const THEME_KEY = "cv_theme";
-        const saved = localStorage.getItem(THEME_KEY);
-        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const theme = saved === "light" || saved === "dark" ? saved : prefersDark ? "dark" : "light";
-        document.documentElement.setAttribute("data-theme", theme);
-      })();
-    </script>
-
-    <link rel="preload" as="image" href="assets/jesper.jpg" />
 
     <style>
       :root {
-        color-scheme: light dark;
-
         --bg: #fbfbfd;
         --fg: #0f172a;
         --muted: rgba(15, 23, 42, 0.72);
@@ -117,32 +102,9 @@
         margin: 0 auto;
         padding: 10px 16px;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        justify-content: flex-end;
         gap: 10px;
       }
-
-      .topLinks {
-        display: none;
-        gap: 10px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-      .topLinks a {
-        font-size: 0.92rem;
-        color: var(--muted);
-        padding: 6px 8px;
-        border-radius: 10px;
-      }
-      .topLinks a:focus-visible { outline: none; box-shadow: var(--ring); }
-      .topLinks a:hover { color: var(--fg); text-decoration: none; background: rgba(0,0,0,0.03); }
-      [data-theme="dark"] .topLinks a:hover { background: rgba(255,255,255,0.06); }
-
-      @media (min-width: 860px) {
-        .topLinks { display: flex; }
-      }
-
-      .topActions { display: flex; gap: 10px; justify-content: flex-end; }
 
       .btn {
         appearance: none;
@@ -161,6 +123,7 @@
 
       header { padding: 18px 0 10px; }
 
+      /* HERO: text left, portrait right */
       .hero {
         display: grid;
         grid-template-columns: 1fr clamp(200px, 22vw, 270px);
@@ -201,7 +164,11 @@
 
       @media (max-width: 760px) {
         .hero { grid-template-columns: 1fr; }
-        .avatarWrap { height: 240px; min-height: 240px; order: -1; }
+        .avatarWrap {
+          height: 240px;
+          min-height: 240px;
+          order: -1;
+        }
       }
 
       h1 {
@@ -218,7 +185,11 @@
         max-width: var(--measure);
       }
 
-      .lede { margin: 14px 0 0; max-width: var(--measure); font-size: 1.04rem; }
+      .lede {
+        margin: 14px 0 0;
+        max-width: var(--measure);
+        font-size: 1.04rem;
+      }
 
       .metaRow {
         margin: 16px 0 0;
@@ -249,18 +220,18 @@
         color: var(--muted);
       }
 
+      /* Single clean separator under hero */
       .rule { border-top: 1px solid var(--hairline); margin: 18px 0 10px; }
 
-      section { padding: 18px 0 0; --section-width: var(--measure); }
-      section.sectionWide { --section-width: var(--max); }
+      section { padding: 18px 0 0; }
 
+      /* Strakker: geen border-top op elke sectietitel */
       .sectionTitle {
-        display: grid;
-        grid-template-columns: 1fr auto;
+        display: flex;
         align-items: baseline;
+        justify-content: space-between;
         gap: 12px;
         margin: 0 0 8px;
-        max-width: var(--section-width);
       }
 
       h2 {
@@ -273,20 +244,37 @@
 
       .sectionNote { color: var(--muted); font-size: 0.95rem; }
 
-      .sectionDivider { border-top: 1px solid var(--hairline); margin: 18px 0 0; }
+      /* Subtiele scheiding tussen hoofdsecties */
+      .sectionDivider {
+        border-top: 1px solid var(--hairline);
+        margin: 18px 0 0;
+      }
 
       .twoCol {
         display: grid;
         grid-template-columns: 1.2fr 0.8fr;
         gap: 22px;
       }
-      @media (max-width: 900px) { .twoCol { grid-template-columns: 1fr; } }
+      @media (max-width: 900px) {
+        .twoCol { grid-template-columns: 1fr; }
+      }
 
-      .bullets { margin: 10px 0 0; padding-left: 18px; max-width: var(--measure); }
+      .bullets {
+        margin: 10px 0 0;
+        padding-left: 18px;
+        max-width: var(--measure);
+      }
       .bullets li { margin: 6px 0; }
 
-      .entry { padding: 14px 0 0; }
-      .entry + .entry { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--hairline); }
+      /* EXPERIENCE blocks: remove lots of lines, use whitespace */
+      .entry {
+        padding: 14px 0 0;
+      }
+      .entry + .entry {
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px solid var(--hairline);
+      }
 
       .entryHead {
         display: flex;
@@ -296,13 +284,38 @@
         align-items: baseline;
       }
 
-      .role { margin: 0; font-size: 1.1rem; letter-spacing: -0.01em; }
+      .role {
+        margin: 0;
+        font-size: 1.1rem;
+        letter-spacing: -0.01em;
+      }
+
       .org { color: var(--fg); font-weight: 900; }
-      .whenWhere { font-family: var(--mono); font-size: 0.92rem; color: var(--muted); white-space: nowrap; }
 
-      .context { margin: 8px 0 0; color: var(--muted); max-width: var(--measure); }
+      .whenWhere {
+        font-family: var(--mono);
+        font-size: 0.92rem;
+        color: var(--muted);
+        white-space: nowrap;
+      }
 
-      .par { margin: 12px 0 0; display: grid; grid-template-columns: 1fr; gap: 12px; max-width: var(--measure); }
+      .context {
+        margin: 8px 0 0;
+        color: var(--muted);
+        max-width: var(--measure);
+      }
+
+      .par {
+        margin: 12px 0 0;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        max-width: var(--measure);
+      }
+
+      /* Strakker: geen dashed borders per blok */
+      .parBlock { padding: 0; }
+
       .parLabel {
         display: inline-block;
         font-family: var(--mono);
@@ -315,30 +328,20 @@
         border-radius: 999px;
         margin-bottom: 6px;
       }
+
       .parText { margin: 0; }
 
-      .callout { padding: 12px 0 0; max-width: var(--measure); }
-      .calloutActions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-
-      .miniList {
-        margin: 10px 0 0;
-        padding: 0;
-        list-style: none;
-        display: grid;
-        gap: 10px;
+      .callout {
+        padding: 12px 0 0;
         max-width: var(--measure);
       }
-      .miniCard {
-        border: 1px solid var(--hairline);
-        border-radius: var(--radius);
-        padding: 10px 12px;
-        background: rgba(0,0,0,0.02);
-      }
-      [data-theme="dark"] .miniCard { background: rgba(255,255,255,0.03); }
 
-      .miniCardTitle { margin: 0; font-weight: 850; }
-      .miniCardMeta { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
-      .miniCardBody { margin: 8px 0 0; max-width: var(--measure); }
+      .calloutActions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
 
       footer {
         margin-top: 28px;
@@ -352,55 +355,35 @@
         flex-wrap: wrap;
       }
 
-      .srOnly {
-        position: absolute !important;
-        width: 1px !important;
-        height: 1px !important;
-        padding: 0 !important;
-        margin: -1px !important;
-        overflow: hidden !important;
-        clip: rect(0, 0, 0, 0) !important;
-        white-space: nowrap !important;
-        border: 0 !important;
-      }
-
-      .toast {
-        position: fixed;
-        left: 50%;
-        bottom: 18px;
-        transform: translateX(-50%);
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        padding: 10px 12px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        color: var(--fg);
-        font-size: 0.95rem;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 160ms ease, transform 160ms ease;
-      }
-      .toast[data-open="true"] { opacity: 1; transform: translateX(-50%) translateY(-2px); }
-
       @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
-        .btn, .toast { transition: none !important; }
+        .btn { transition: none !important; }
         .btn:hover { transform: none !important; }
       }
 
       @page { size: A4; margin: 10mm; }
 
       @media print {
-        .topbarWrap, .skipLink, .toast { display: none !important; }
+        .topbarWrap, .skipLink { display: none !important; }
         body { background: #fff !important; color: #000 !important; font-size: 11pt; line-height: 1.35; }
         a { color: #000 !important; text-decoration: none !important; }
+
         .container { max-width: 780px; padding: 0 !important; }
         .twoCol { grid-template-columns: 1fr !important; gap: 10px !important; }
 
-        .hero { grid-template-columns: 1fr 210px !important; gap: 16px !important; align-items: start !important; }
-        .avatarWrap { order: 0 !important; height: 240px !important; min-height: 240px !important; }
+        /* IMPORTANT: override the mobile hero in print to avoid banner crop */
+        .hero {
+          grid-template-columns: 1fr 210px !important;
+          gap: 16px !important;
+          align-items: start !important;
+        }
+        .avatarWrap {
+          order: 0 !important;
+          height: 240px !important;
+          min-height: 240px !important;
+        }
 
-        .entry, footer, .miniCard { break-inside: avoid; page-break-inside: avoid; }
+        .entry, footer { break-inside: avoid; page-break-inside: avoid; }
         .printBreakBefore { break-before: page; page-break-before: always; }
       }
     </style>
@@ -427,20 +410,10 @@
     <a class="skipLink" href="#main">Direct naar inhoud</a>
 
     <div class="topbarWrap" aria-label="Acties">
-      <nav class="topbar" aria-label="Bovenbalk">
-        <div class="topLinks" aria-label="Snelle navigatie">
-          <a href="#results">Resultaten</a>
-          <a href="#skills">Kerncompetenties</a>
-          <a href="#experience">Ervaring</a>
-          <a href="#extras">Opleiding</a>
-          <a href="#contact">Contact</a>
-        </div>
-
-        <div class="topActions">
-          <button class="btn" id="themeBtn" type="button" aria-label="Thema wisselen" aria-pressed="false">Donker</button>
-          <button class="btn" id="pdfBtn" type="button" aria-label="Print of download als PDF">Print/PDF</button>
-        </div>
-      </nav>
+      <div class="topbar">
+        <button class="btn" id="themeBtn" type="button" aria-label="Thema wisselen" aria-pressed="false">Donker</button>
+        <button class="btn" id="pdfBtn" type="button" aria-label="Download als PDF">Download PDF</button>
+      </div>
     </div>
 
     <div class="container" id="top">
@@ -452,16 +425,16 @@
               <p class="subtitle">IT Projectmanager • Publieke sector • Informatie- en procesmanagement</p>
 
               <p class="lede">
-                <strong>Ik realiseer voorspelbare IT-veranderingen in de publieke sector</strong> door techniek, proces en mensen te verbinden.
-                Focus: heldere besluitvorming, beheersbare risico’s en een overdracht die werkt.
+                <strong>Ik lever voorspelbare IT-veranderingen in de publieke sector</strong> door techniek, proces en mensen te verbinden.
+                Focus: besluitvorming borgen, risico’s beheersbaar maken en het documenteren daarvan.
               </p>
 
-              <address class="metaRow" aria-label="Contactgegevens">
+              <div class="metaRow" aria-label="Contactgegevens">
                 <span>Hellendoorn, NL</span>
                 <span><a href="mailto:jesperrunneboom@live.nl" id="emailLink">jesperrunneboom@live.nl</a></span>
                 <span><a href="tel:+31618933307">+31 6 189 333 07</a></span>
                 <span><a href="https://www.linkedin.com/in/jesper-runneboom-245773b5/" rel="me noopener">LinkedIn</a></span>
-              </address>
+              </div>
 
               <div class="tags" aria-label="Snelle samenvatting">
                 <span class="tag">PRINCE2</span>
@@ -472,10 +445,6 @@
                 <span class="tag">Analyse</span>
                 <span class="tag">Documentatie</span>
               </div>
-
-              <p class="context" style="margin-top: 10px;">
-                Laatst bijgewerkt: <span id="lastUpdated"></span>
-              </p>
             </div>
 
             <div class="avatarWrap" aria-label="Profielfoto">
@@ -487,7 +456,6 @@
                 width="270"
                 height="320"
                 loading="eager"
-                fetchpriority="high"
                 decoding="async"
               />
               <div class="avatarFallback" id="avatarFallback" aria-hidden="true" style="display:none;">JR</div>
@@ -504,15 +472,15 @@
           </div>
 
           <ul class="bullets">
-            <li><strong>Migraties on-premise naar SaaS</strong> gecoördineerd voor meerdere gemeenten, inclusief planning, afhankelijkheden en beheersbare risico’s.</li>
-            <li><strong>Primair aanspreekpunt voor klanten</strong> met duidelijke voortgangssturing, afstemming en prioritering richting ontwikkelteam (Jira).</li>
-            <li><strong>Scope en besluitvorming geborgd</strong> met een transparant overzicht van keuzes, acties en knelpunten, inclusief een overdracht die beheer direct verder helpt.</li>
+            <li><strong>Migraties on-premise → SaaS</strong> gecoördineerd voor meerdere gemeenten, met beheerafspraken en overdraagbare documentatie.</li>
+            <li><strong>Aanspreekpunt voor meerdere klanten</strong> en sturing richting ontwikkelteam (prioriteiten, afstemming, voortgang in Jira).</li>
+            <li><strong>Besluitvorming & scope control</strong> geborgd via beslislog, risico-/knelpuntenoverzicht en opleverdossier.</li>
           </ul>
 
           <div class="sectionDivider" aria-hidden="true"></div>
         </section>
 
-        <section class="sectionWide" aria-labelledby="skills">
+        <section aria-labelledby="skills">
           <div class="sectionTitle">
             <h2 id="skills">Kerncompetenties</h2>
             <span class="sectionNote">focusgebieden</span>
@@ -522,15 +490,15 @@
             <div>
               <ul class="bullets">
                 <li>Omgevingsmanagement (stakeholders, verwachtingen, communicatie)</li>
-                <li>Projectsturing (scope, afhankelijkheden, voortgang)</li>
-                <li>Risico- en knelpuntenbeheer (mitigaties, escalaties, besluitvorming)</li>
-                <li>Eisen en documentatie (werkinstructies, overdracht, beheerafspraken)</li>
-                <li>Verandering en adoptie (acceptatie, nazorg, werkafspraken)</li>
+                <li>Projectplanning & sturing (scope, afhankelijkheden, voortgang)</li>
+                <li>Risico- & knelpuntenbeheer (mitigaties, escalaties, besluitvorming)</li>
+                <li>Eisen & documentatie (werkinstructies, opleverdossier, overdracht)</li>
+                <li>Verandering & adoptie (afspraken, acceptatie, nazorg)</li>
               </ul>
             </div>
             <div>
               <ul class="bullets">
-                <li>Zaaksystemen, DMS en archiefketen</li>
+                <li>Zaaksystemen / DMS / archiefsystemen</li>
                 <li>M365</li>
                 <li>Jira</li>
                 <li>Linux (basis)</li>
@@ -562,22 +530,22 @@
               <div class="parBlock">
                 <span class="parLabel">Probleem</span>
                 <p class="parText">
-                  Gemeenten wilden migreren naar SaaS met minimale verstoring, terwijl inrichting en afhankelijkheden per organisatie verschillen.
+                  Gemeenten wilden van on-premise naar SaaS migreren met minimale verstoring, terwijl inrichting en afhankelijkheden per organisatie verschillen.
                 </p>
               </div>
 
               <div class="parBlock">
                 <span class="parLabel">Aanpak</span>
                 <p class="parText">
-                  Planning en afstemming ingericht, risico’s en afhankelijkheden expliciet gemaakt en besluiten en acties eenduidig vastgelegd.
-                  Daarnaast bewaakte ik prioriteiten en voortgang richting ontwikkelteam (Jira) en coördineerde ik maatwerk waar nodig.
+                  Planning en afstemming ingericht, risico’s expliciet gemaakt, keuzes vastgelegd (beslislog), en overdraagbaarheid geborgd met opleverdossier en beheerafspraken.
+                  Daarnaast: prioriteiten en voortgang richting ontwikkelteam bewaakt (Jira) en maatwerk gecoördineerd.
                 </p>
               </div>
 
               <div class="parBlock">
                 <span class="parLabel">Resultaat</span>
                 <p class="parText">
-                  Migratietrajecten afgerond met duidelijke beheerafspraken, transparante besluitvorming en documentatie waarmee de lijnorganisatie direct verder kon.
+                  Migratietrajecten succesvol afgerond met duidelijke afspraken voor beheer, transparante besluitvorming en documentatie die door de lijnorganisatie gedragen wordt.
                 </p>
               </div>
             </div>
@@ -597,91 +565,25 @@
               <div class="parBlock">
                 <span class="parLabel">Probleem</span>
                 <p class="parText">
-                  Organisaties moesten processen en inrichting laten aansluiten op het zaaksysteem, met heldere eisen, acceptatiecriteria en werkafspraken tussen business en IT.
+                  Organisaties moesten processen en inrichting in lijn brengen met het zaaksysteem, met heldere eisen, acceptatiecriteria en werkafspraken tussen business en IT.
                 </p>
               </div>
 
               <div class="parBlock">
                 <span class="parLabel">Aanpak</span>
                 <p class="parText">
-                  Wensen vertaald naar concrete eisen, functioneel ingericht en stakeholders begeleid in keuzes, acceptatie en overdracht.
+                  Functioneel ingericht en begeleid met stakeholders. Eisen uitgewerkt, werkinstructies opgesteld en acceptatie/oplevering gefaciliteerd.
                 </p>
               </div>
 
               <div class="parBlock">
                 <span class="parLabel">Resultaat</span>
                 <p class="parText">
-                  Een werkbare inrichting en duidelijke procesafspraken, waardoor gebruikersacceptatie toenam en beheer beter uitvoerbaar werd.
+                  Werkbare procesafspraken en overdraagbare inrichting opgeleverd, waardoor gebruikersacceptatie en beheerbaarheid toenamen.
                 </p>
               </div>
             </div>
           </article>
-
-          <div class="sectionDivider" aria-hidden="true"></div>
-        </section>
-
-        <section aria-labelledby="extras">
-          <div class="sectionTitle">
-            <h2 id="extras">Opleiding & Certificeringen</h2>
-            <span class="sectionNote">verwachte CV-basis</span>
-          </div>
-
-          <ul class="miniList">
-            <li class="miniCard">
-              <p class="miniCardTitle">PRINCE2</p>
-              <p class="miniCardMeta">Vul hier niveau/jaar in</p>
-              <p class="miniCardBody">Tip: noem scope (IT/proces), en eventueel examen-ID of validiteit (als relevant).</p>
-            </li>
-            <li class="miniCard">
-              <p class="miniCardTitle">Opleiding</p>
-              <p class="miniCardMeta">Vul hier opleiding + instelling + jaar in</p>
-              <p class="miniCardBody">Houd het kort: 1 regel per opleiding is genoeg.</p>
-            </li>
-          </ul>
-
-          <div class="sectionDivider" aria-hidden="true"></div>
-        </section>
-
-        <section aria-labelledby="projects">
-          <div class="sectionTitle">
-            <h2 id="projects">Projecten</h2>
-            <span class="sectionNote">bewijs van impact</span>
-          </div>
-
-          <ul class="miniList">
-            <li class="miniCard">
-              <p class="miniCardTitle">Case: SaaS-migratie gemeente (voorbeeld)</p>
-              <p class="miniCardMeta">Rol: projectmanager · Scope: X teams · Doorlooptijd: X</p>
-              <p class="miniCardBody">
-                2–3 bullets werken het best: (1) context, (2) jouw sturing, (3) meetbaar resultaat.
-              </p>
-            </li>
-            <li class="miniCard">
-              <p class="miniCardTitle">Case: Inrichting zaaksysteem + adoptie (voorbeeld)</p>
-              <p class="miniCardMeta">Stakeholders: business/IT/beheer · Tooling: Jira/M365</p>
-              <p class="miniCardBody">
-                Noem hier 1 “harde” uitkomst: minder doorlooptijd, hogere acceptatie, minder incidenten, etc.
-              </p>
-            </li>
-          </ul>
-
-          <div class="sectionDivider" aria-hidden="true"></div>
-        </section>
-
-        <section aria-labelledby="languages">
-          <div class="sectionTitle">
-            <h2 id="languages">Talen</h2>
-            <span class="sectionNote">kort en helder</span>
-          </div>
-
-          <ul class="bullets">
-            <li>Nederlands — moedertaal</li>
-            <li>Engels — professioneel</li>
-            <li>Duits — basis</li>
-            <li>Spaans — basis</li>
-          </ul>
-
-          <div class="sectionDivider" aria-hidden="true"></div>
         </section>
 
         <section aria-labelledby="contact">
@@ -692,13 +594,12 @@
 
           <div class="callout">
             <p style="margin: 0; max-width: var(--measure);">
-              Beschikbaar voor projectmanagement, informatie- & procesmanagement en implementaties en migraties.
-              Ik werk graag met heldere scope, vaste cadans en een overdracht die beheer direct helpt.
+              Beschikbaar voor projectmanagement, informatie- & procesmanagement en implementaties/migraties.
+              Ik werk graag met heldere scope, vaste cadans en een opleverdossier dat beheer overdraagt zonder ruis.
             </p>
 
             <div class="calloutActions">
               <button class="btn" id="copyEmailBtn" type="button" aria-label="Kopieer email">Kopieer e-mail</button>
-              <button class="btn" id="vcardBtn" type="button" aria-label="Download vCard">vCard</button>
               <a class="btn" href="mailto:jesperrunneboom@live.nl">Mail</a>
               <a class="btn" href="tel:+31618933307">Bel</a>
             </div>
@@ -712,12 +613,8 @@
       </main>
     </div>
 
-    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" data-open="false"></div>
-    <div class="srOnly" id="srStatus" aria-live="polite" aria-atomic="true"></div>
-
-    <script defer>
+    <script>
       const THEME_KEY = "cv_theme";
-      const PDF_ASSET = "assets/Jesper-Runneboom-CV.pdf";
 
       function applyTheme(theme) {
         document.documentElement.setAttribute("data-theme", theme);
@@ -745,69 +642,23 @@
         btn.textContent = theme === "dark" ? "Licht" : "Donker";
       }
 
-      let toastTimer = null;
-
-      function announce(message) {
-        const toast = document.getElementById("toast");
-        const sr = document.getElementById("srStatus");
-        if (sr) sr.textContent = message;
-
-        if (!toast) return;
-        toast.textContent = message;
-        toast.setAttribute("data-open", "true");
-
-        if (toastTimer) window.clearTimeout(toastTimer);
-        toastTimer = window.setTimeout(() => toast.setAttribute("data-open", "false"), 1800);
-      }
-
-      async function copyEmail() {
+      function copyEmail() {
         const email = document.getElementById("emailLink")?.textContent?.trim() || "";
         if (!email) return;
 
-        try {
-          if (navigator.clipboard?.writeText) {
-            await navigator.clipboard.writeText(email);
-          } else {
-            const textarea = document.createElement("textarea");
-            textarea.value = email;
-            textarea.setAttribute("readonly", "true");
-            textarea.style.position = "absolute";
-            textarea.style.left = "-9999px";
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand("copy");
-            textarea.remove();
-          }
-          announce("E-mail gekopieerd");
-        } catch {
-          announce("Kopiëren mislukt");
-        }
+        navigator.clipboard?.writeText(email).catch(() => {
+          const textarea = document.createElement("textarea");
+          textarea.value = email;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          textarea.remove();
+        });
       }
 
-      function openPrintDialog() {
-        const previousTitle = document.title;
+      function openPdfPrintDialog() {
         document.title = "Jesper Runneboom - CV";
         window.print();
-        window.setTimeout(() => (document.title = previousTitle), 250);
-      }
-
-      async function openPdfOrPrint() {
-        try {
-          const res = await fetch(PDF_ASSET, { method: "HEAD", cache: "no-store" });
-          if (res.ok) {
-            const a = document.createElement("a");
-            a.href = PDF_ASSET;
-            a.download = "Jesper-Runneboom-CV.pdf";
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            announce("PDF download gestart");
-            return;
-          }
-        } catch {
-          // Ignore and fallback to print.
-        }
-        openPrintDialog();
       }
 
       function initAvatar() {
@@ -830,7 +681,10 @@
 
         const tryNext = () => {
           idx += 1;
-          if (idx >= candidates.length) return showFallback();
+          if (idx >= candidates.length) {
+            showFallback();
+            return;
+          }
           img.src = candidates[idx];
         };
 
@@ -840,34 +694,7 @@
         if (img.complete && img.naturalWidth === 0) tryNext();
       }
 
-      function downloadVCard() {
-        const vcf = [
-          "BEGIN:VCARD",
-          "VERSION:3.0",
-          "N:Runneboom;Jesper;;;",
-          "FN:Jesper Runneboom",
-          "TITLE:IT Projectmanager",
-          "TEL;TYPE=CELL:+31618933307",
-          "EMAIL;TYPE=INTERNET:jesperrunneboom@live.nl",
-          "ADR;TYPE=HOME:;;Hellendoorn;;;Nederland",
-          "URL:https://jesperrunneboom.github.io/",
-          "END:VCARD",
-        ].join("\n");
-
-        const blob = new Blob([vcf], { type: "text/vcard;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "Jesper-Runneboom.vcf";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
-        URL.revokeObjectURL(url);
-        announce("vCard gedownload");
-      }
-
+      applyTheme(getPreferredTheme());
       syncThemeBtn();
       initAvatar();
 
@@ -876,16 +703,10 @@
         syncThemeBtn();
       });
 
-      document.getElementById("pdfBtn")?.addEventListener("click", openPdfOrPrint);
+      document.getElementById("pdfBtn")?.addEventListener("click", openPdfPrintDialog);
       document.getElementById("copyEmailBtn")?.addEventListener("click", copyEmail);
-      document.getElementById("vcardBtn")?.addEventListener("click", downloadVCard);
 
       document.getElementById("year").textContent = String(new Date().getFullYear());
-      document.getElementById("lastUpdated").textContent = new Date().toLocaleDateString("nl-NL", {
-        year: "numeric",
-        month: "long",
-      });
-
       document.getElementById("backToTop")?.addEventListener("click", (e) => {
         e.preventDefault();
         const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
