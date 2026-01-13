@@ -4,11 +4,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+
     <meta
       name="description"
       content="Jesper Runneboom - IT Projectmanager • Publieke sector • Informatie- en procesmanagement."
     />
     <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://jesperrunneboom.github.io/" />
+
+    <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Jesper Runneboom - IT Projectmanager (CV)" />
@@ -18,11 +23,36 @@
     />
     <meta property="og:url" content="https://jesperrunneboom.github.io/" />
     <meta property="og:locale" content="nl_NL" />
+    <!-- Optional: set an OG image if you add one -->
+    <!-- <meta property="og:image" content="https://jesperrunneboom.github.io/assets/og.jpg" /> -->
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Optional favicons (add files to /assets or root) -->
+    <!-- <link rel="icon" href="/favicon.ico" sizes="any" /> -->
+    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png" /> -->
 
     <title>Jesper Runneboom - IT Projectmanager (CV)</title>
 
+    <!-- Theme init BEFORE paint: prevents light/dark flash -->
+    <script>
+      (function () {
+        const THEME_KEY = "cv_theme";
+        const saved = localStorage.getItem(THEME_KEY);
+        const prefersDark =
+          window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const theme = saved === "light" || saved === "dark" ? saved : prefersDark ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+
+    <!-- Preload likely hero image -->
+    <link rel="preload" as="image" href="assets/jesper.jpg" />
+
     <style>
       :root {
+        color-scheme: light dark;
+
         --bg: #fbfbfd;
         --fg: #0f172a;
         --muted: rgba(15, 23, 42, 0.72);
@@ -123,7 +153,6 @@
 
       header { padding: 18px 0 10px; }
 
-      /* HERO: text left, portrait right */
       .hero {
         display: grid;
         grid-template-columns: 1fr clamp(200px, 22vw, 270px);
@@ -220,12 +249,10 @@
         color: var(--muted);
       }
 
-      /* Single clean separator under hero */
       .rule { border-top: 1px solid var(--hairline); margin: 18px 0 10px; }
 
       section { padding: 18px 0 0; }
 
-      /* Strakker: geen border-top op elke sectietitel */
       .sectionTitle {
         display: flex;
         align-items: baseline;
@@ -244,7 +271,6 @@
 
       .sectionNote { color: var(--muted); font-size: 0.95rem; }
 
-      /* Subtiele scheiding tussen hoofdsecties */
       .sectionDivider {
         border-top: 1px solid var(--hairline);
         margin: 18px 0 0;
@@ -266,10 +292,7 @@
       }
       .bullets li { margin: 6px 0; }
 
-      /* EXPERIENCE blocks: remove lots of lines, use whitespace */
-      .entry {
-        padding: 14px 0 0;
-      }
+      .entry { padding: 14px 0 0; }
       .entry + .entry {
         margin-top: 18px;
         padding-top: 18px;
@@ -313,7 +336,6 @@
         max-width: var(--measure);
       }
 
-      /* Strakker: geen dashed borders per blok */
       .parBlock { padding: 0; }
 
       .parLabel {
@@ -355,23 +377,55 @@
         flex-wrap: wrap;
       }
 
+      /* a11y status/toast */
+      .srOnly {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 18px;
+        transform: translateX(-50%);
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 10px 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        color: var(--fg);
+        font-size: 0.95rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 160ms ease, transform 160ms ease;
+      }
+      .toast[data-open="true"] {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-2px);
+      }
+
       @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
-        .btn { transition: none !important; }
+        .btn, .toast { transition: none !important; }
         .btn:hover { transform: none !important; }
       }
 
       @page { size: A4; margin: 10mm; }
 
       @media print {
-        .topbarWrap, .skipLink { display: none !important; }
+        .topbarWrap, .skipLink, .toast { display: none !important; }
         body { background: #fff !important; color: #000 !important; font-size: 11pt; line-height: 1.35; }
         a { color: #000 !important; text-decoration: none !important; }
 
         .container { max-width: 780px; padding: 0 !important; }
         .twoCol { grid-template-columns: 1fr !important; gap: 10px !important; }
 
-        /* IMPORTANT: override the mobile hero in print to avoid banner crop */
         .hero {
           grid-template-columns: 1fr 210px !important;
           gap: 16px !important;
@@ -410,10 +464,10 @@
     <a class="skipLink" href="#main">Direct naar inhoud</a>
 
     <div class="topbarWrap" aria-label="Acties">
-      <div class="topbar">
+      <nav class="topbar" aria-label="Bovenbalk">
         <button class="btn" id="themeBtn" type="button" aria-label="Thema wisselen" aria-pressed="false">Donker</button>
         <button class="btn" id="pdfBtn" type="button" aria-label="Download als PDF">Download PDF</button>
-      </div>
+      </nav>
     </div>
 
     <div class="container" id="top">
@@ -429,12 +483,12 @@
                 Focus: heldere besluitvorming, beheersbare risico’s en een overdracht die werkt.
               </p>
 
-              <div class="metaRow" aria-label="Contactgegevens">
+              <address class="metaRow" aria-label="Contactgegevens">
                 <span>Hellendoorn, NL</span>
                 <span><a href="mailto:jesperrunneboom@live.nl" id="emailLink">jesperrunneboom@live.nl</a></span>
                 <span><a href="tel:+31618933307">+31 6 189 333 07</a></span>
                 <span><a href="https://www.linkedin.com/in/jesper-runneboom-245773b5/" rel="me noopener">LinkedIn</a></span>
-              </div>
+              </address>
 
               <div class="tags" aria-label="Snelle samenvatting">
                 <span class="tag">PRINCE2</span>
@@ -456,6 +510,7 @@
                 width="270"
                 height="320"
                 loading="eager"
+                fetchpriority="high"
                 decoding="async"
               />
               <div class="avatarFallback" id="avatarFallback" aria-hidden="true" style="display:none;">JR</div>
@@ -613,7 +668,17 @@
       </main>
     </div>
 
-    <script>
+    <!-- a11y feedback: visible toast + screenreader live region -->
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" data-open="false"></div>
+    <div class="srOnly" id="srStatus" aria-live="polite" aria-atomic="true"></div>
+
+    <noscript>
+      <div style="max-width:980px;margin:10px auto;padding:10px 16px;border:1px solid rgba(0,0,0,.12);border-radius:12px;">
+        Voor themawisseling, e-mail kopiëren en PDF-print is JavaScript nodig.
+      </div>
+    </noscript>
+
+    <script defer>
       const THEME_KEY = "cv_theme";
 
       function applyTheme(theme) {
@@ -642,18 +707,45 @@
         btn.textContent = theme === "dark" ? "Licht" : "Donker";
       }
 
-      function copyEmail() {
+      let toastTimer = null;
+
+      function announce(message) {
+        const toast = document.getElementById("toast");
+        const sr = document.getElementById("srStatus");
+        if (sr) sr.textContent = message;
+
+        if (!toast) return;
+        toast.textContent = message;
+        toast.setAttribute("data-open", "true");
+
+        if (toastTimer) window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => {
+          toast.setAttribute("data-open", "false");
+        }, 1800);
+      }
+
+      async function copyEmail() {
         const email = document.getElementById("emailLink")?.textContent?.trim() || "";
         if (!email) return;
 
-        navigator.clipboard?.writeText(email).catch(() => {
-          const textarea = document.createElement("textarea");
-          textarea.value = email;
-          document.body.appendChild(textarea);
-          textarea.select();
-          document.execCommand("copy");
-          textarea.remove();
-        });
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(email);
+          } else {
+            const textarea = document.createElement("textarea");
+            textarea.value = email;
+            textarea.setAttribute("readonly", "true");
+            textarea.style.position = "absolute";
+            textarea.style.left = "-9999px";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            textarea.remove();
+          }
+          announce("E-mail gekopieerd");
+        } catch {
+          announce("Kopiëren mislukt");
+        }
       }
 
       function openPdfPrintDialog() {
@@ -694,7 +786,7 @@
         if (img.complete && img.naturalWidth === 0) tryNext();
       }
 
-      applyTheme(getPreferredTheme());
+      // Theme already applied in <head>; just sync UI.
       syncThemeBtn();
       initAvatar();
 
