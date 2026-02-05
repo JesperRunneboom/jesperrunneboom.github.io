@@ -463,8 +463,8 @@
         .metaRow { margin: 8px 0 0 !important; font-size: 0.85rem !important; }
         .role { font-size: 1rem !important; }
 
-        /* Page break control */
-        .entry, footer { break-inside: avoid; page-break-inside: avoid; }
+        /* Page break control — only small blocks; large .entry may span pages */
+        .entryHead, .parBlock, .certItem, footer { break-inside: avoid; page-break-inside: avoid; }
         .printBreakBefore { break-before: page; page-break-before: always; }
       }
     </style>
