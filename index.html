@@ -1009,20 +1009,9 @@
         });
       }
 
-      /* Print helpers — clear ALL inline animation styles so nothing is hidden */
-      function clearAnimationStyles() {
-        document.querySelectorAll("section, footer").forEach((el) => {
-          el.style.opacity = "";
-          el.style.transform = "";
-          el.style.transition = "";
-        });
-      }
-      window.addEventListener("beforeprint", clearAnimationStyles);
-
       function openPdfPrintDialog() {
         const originalTitle = document.title;
         document.title = "Jesper Runneboom - CV";
-        clearAnimationStyles();
         window.print();
         document.title = originalTitle;
       }
@@ -1090,25 +1079,6 @@
         if (progressBar) progressBar.style.width = progress + "%";
       }, { passive: true });
 
-      /* Fade-in on scroll — uses inline styles so print can simply clear them */
-      const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (!reduceMotion) {
-        document.querySelectorAll("section, footer").forEach((el) => {
-          el.style.opacity = "0";
-          el.style.transform = "translateY(18px)";
-          el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-        });
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.style.opacity = "1";
-              entry.target.style.transform = "translateY(0)";
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.1 });
-        document.querySelectorAll("section, footer").forEach((el) => observer.observe(el));
-      }
 
       const media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
       if (media) {
