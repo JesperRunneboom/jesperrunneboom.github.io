@@ -406,28 +406,65 @@
         .progressBar { transition: none !important; }
       }
 
-      @page { size: A4; margin: 10mm; }
+      @page { size: A4; margin: 12mm 14mm; }
 
       @media print {
-        .topbarWrap, .skipLink, .progressBar { display: none !important; }
-        body { background: #fff !important; color: #000 !important; font-size: 11pt; line-height: 1.35; }
+        /* Hide interactive/decorative elements */
+        .topbarWrap, .skipLink, .progressBar, .calloutActions { display: none !important; }
+
+        /* Reset animations — fadeIn elements must be visible */
+        .fadeIn { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+        /* Base typography */
+        body { background: #fff !important; color: #000 !important; font-size: 10.5pt; line-height: 1.35; }
         a { color: #000 !important; text-decoration: none !important; }
+        .muted, .metaRow, .context, .certOrg, .whenWhere, .sectionNote { color: #444 !important; }
 
-        .container { max-width: 780px; padding: 0 !important; }
-        .twoCol { grid-template-columns: 1fr !important; gap: 10px !important; }
+        /* Layout */
+        .container { max-width: 100%; padding: 0 !important; }
+        .twoCol { grid-template-columns: 1.2fr 0.8fr !important; gap: 14px !important; }
 
+        /* Hero */
         .hero {
-          grid-template-columns: 1fr 210px !important;
-          gap: 16px !important;
+          grid-template-columns: 1fr 150px !important;
+          gap: 14px !important;
           align-items: start !important;
         }
         .avatarWrap {
           order: 0 !important;
-          height: 240px !important;
-          min-height: 240px !important;
+          height: 180px !important;
+          min-height: 180px !important;
         }
 
-        .entry, footer { break-inside: avoid; page-break-inside: avoid; }
+        /* Compact spacing */
+        .rule { margin: 10px 0 6px !important; }
+        section { padding: 10px 0 0 !important; }
+        .sectionDivider { margin: 10px 0 0 !important; }
+        .bullets { margin: 6px 0 0 !important; }
+        .bullets li { margin: 3px 0 !important; }
+        .entry { padding: 8px 0 0 !important; }
+        .entry + .entry { margin-top: 10px !important; padding-top: 10px !important; }
+        .par { margin: 8px 0 0 !important; gap: 6px !important; }
+        .certList { gap: 2px !important; }
+        .certItem { padding: 4px 0 !important; }
+        .callout { padding: 6px 0 0 !important; }
+        footer { margin-top: 14px !important; padding-top: 8px !important; }
+
+        /* Smaller tags for print */
+        .tags { gap: 4px !important; margin-top: 6px !important; }
+        .tag { font-size: 0.75rem !important; padding: 2px 6px !important; }
+        .parLabel { font-size: 0.7rem !important; padding: 1px 6px !important; }
+
+        /* Typography tweaks */
+        h1 { font-size: 1.6rem !important; }
+        h2 { font-size: 0.9rem !important; }
+        .subtitle { margin: 6px 0 0 !important; font-size: 0.95rem !important; }
+        .lede { margin: 8px 0 0 !important; font-size: 0.92rem !important; }
+        .metaRow { margin: 8px 0 0 !important; font-size: 0.85rem !important; }
+        .role { font-size: 1rem !important; }
+
+        /* Page break control */
+        .entry, footer, section { break-inside: avoid; page-break-inside: avoid; }
         .printBreakBefore { break-before: page; page-break-before: always; }
       }
     </style>
@@ -984,8 +1021,10 @@
       }
 
       function openPdfPrintDialog() {
+        const originalTitle = document.title;
         document.title = "Jesper Runneboom - CV";
         window.print();
+        document.title = originalTitle;
       }
 
       function initAvatar() {
