@@ -463,7 +463,17 @@
           "name":"Atabix B.V.",
           "url":"https://www.atabix.nl/"
         },
+        "alumniOf":[
+          {
+            "@type":"CollegeOrUniversity",
+            "name":"Rijksuniversiteit Groningen",
+            "url":"https://www.rug.nl/"
+          }
+        ],
         "hasCredential":[
+          { "@type":"EducationalOccupationalCredential", "name":"MA Geschiedenis", "credentialCategory":"Master" },
+          { "@type":"EducationalOccupationalCredential", "name":"BA Geschiedenis", "credentialCategory":"Bachelor" },
+          { "@type":"EducationalOccupationalCredential", "name":"PRINCE2 Foundation", "credentialCategory":"Professional certification" },
           { "@type":"EducationalOccupationalCredential", "name":"Rijbewijs B", "credentialCategory":"Driving license" }
         ]
       }
@@ -573,6 +583,31 @@
               </ul>
             </div>
           </div>
+
+          <div class="sectionDivider" aria-hidden="true"></div>
+        </section>
+
+        <section aria-labelledby="education">
+          <div class="sectionTitle">
+            <h2 id="education" data-i18n="eduTitle">Opleiding</h2>
+          </div>
+
+          <ul class="certList">
+            <li class="certItem">
+              <span class="certName" data-i18n="edu1Name">MA Geschiedenis</span>
+              <span class="certOrg" data-i18n="edu1Org">Rijksuniversiteit Groningen</span>
+            </li>
+            <li class="certItem">
+              <span class="certName" data-i18n="edu2Name">BA Geschiedenis</span>
+              <span class="certOrg" data-i18n="edu2Org">Rijksuniversiteit Groningen</span>
+            </li>
+            <li class="certItem">
+              <span class="certName" data-i18n="edu3Name">MBO Grafisch Design</span>
+            </li>
+            <li class="certItem">
+              <span class="certName" data-i18n="edu4Name">HBO Propedeuse Sociaal Werk</span>
+            </li>
+          </ul>
 
           <div class="sectionDivider" aria-hidden="true"></div>
         </section>
@@ -745,6 +780,13 @@
           call: "Bel",
           backToTop: "Naar boven",
           pdfBtn: "Download PDF",
+          eduTitle: "Opleiding",
+          edu1Name: "MA Geschiedenis",
+          edu1Org: "Rijksuniversiteit Groningen",
+          edu2Name: "BA Geschiedenis",
+          edu2Org: "Rijksuniversiteit Groningen",
+          edu3Name: "MBO Grafisch Design",
+          edu4Name: "HBO Propedeuse Sociaal Werk",
           certTitle: "Certificeringen",
           certNote: "behaald",
           cert1Name: "PRINCE2 Foundation",
@@ -793,6 +835,13 @@
           call: "Call",
           backToTop: "Back to top",
           pdfBtn: "Download PDF",
+          eduTitle: "Education",
+          edu1Name: "MA History",
+          edu1Org: "University of Groningen",
+          edu2Name: "BA History",
+          edu2Org: "University of Groningen",
+          edu3Name: "MBO Graphic Design",
+          edu4Name: "HBO Propaedeutic Social Work",
           certTitle: "Certifications",
           certNote: "obtained",
           cert1Name: "PRINCE2 Foundation",
@@ -837,6 +886,13 @@
         setI18n(document.querySelector("[data-i18n='skill4']"), "skill4", lang);
         setI18n(document.querySelector("[data-i18n='skill5']"), "skill5", lang);
         setI18n(document.querySelector("[data-i18n='skill6']"), "skill6", lang);
+        setI18n(document.querySelector("[data-i18n='eduTitle']"), "eduTitle", lang);
+        setI18n(document.querySelector("[data-i18n='edu1Name']"), "edu1Name", lang);
+        setI18n(document.querySelector("[data-i18n='edu1Org']"), "edu1Org", lang);
+        setI18n(document.querySelector("[data-i18n='edu2Name']"), "edu2Name", lang);
+        setI18n(document.querySelector("[data-i18n='edu2Org']"), "edu2Org", lang);
+        setI18n(document.querySelector("[data-i18n='edu3Name']"), "edu3Name", lang);
+        setI18n(document.querySelector("[data-i18n='edu4Name']"), "edu4Name", lang);
         setI18n(document.querySelector("[data-i18n='certTitle']"), "certTitle", lang);
         setI18n(document.querySelector("[data-i18n='certNote']"), "certNote", lang);
         setI18n(document.querySelector("[data-i18n='cert1Name']"), "cert1Name", lang);
