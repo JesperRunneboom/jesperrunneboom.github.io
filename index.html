@@ -412,6 +412,9 @@
       @page { size: A4; margin: 12mm 14mm; }
 
       @media print {
+        /* Allow content to flow across pages (height:100% on body blocks pagination) */
+        html, body { height: auto !important; overflow: visible !important; }
+
         /* Hide interactive/decorative elements */
         .topbarWrap, .skipLink, .progressBar, .calloutActions { display: none !important; }
 
@@ -667,7 +670,7 @@
           <div class="sectionDivider" aria-hidden="true"></div>
         </section>
 
-        <section class="printBreakBefore" aria-labelledby="experience">
+        <section aria-labelledby="experience">
           <div class="sectionTitle">
             <h2 id="experience" data-i18n="expTitle">Ervaring</h2>
             <span class="sectionNote" data-i18n="expNote">probleem, aanpak, resultaat</span>
