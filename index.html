@@ -1020,19 +1020,27 @@
         });
       }
 
+      /* Print helpers — remove fadeIn class entirely so opacity:0 never applies */
+      let _fadeEls = [];
+      function prepareForPrint() {
+        _fadeEls = [...document.querySelectorAll(".fadeIn")];
+        _fadeEls.forEach((el) => el.classList.remove("fadeIn"));
+      }
+      function restoreAfterPrint() {
+        _fadeEls.forEach((el) => { el.classList.add("fadeIn"); el.classList.add("visible"); });
+        _fadeEls = [];
+      }
+      window.addEventListener("beforeprint", prepareForPrint);
+      window.addEventListener("afterprint", restoreAfterPrint);
+
       function openPdfPrintDialog() {
         const originalTitle = document.title;
         document.title = "Jesper Runneboom - CV";
-        /* Force all fadeIn elements visible before printing */
-        document.querySelectorAll(".fadeIn").forEach((el) => el.classList.add("visible"));
+        prepareForPrint();
         window.print();
         document.title = originalTitle;
+        restoreAfterPrint();
       }
-
-      /* Also handle Ctrl+P / browser-initiated print */
-      window.addEventListener("beforeprint", () => {
-        document.querySelectorAll(".fadeIn").forEach((el) => el.classList.add("visible"));
-      });
 
       function initAvatar() {
         const img = document.getElementById("avatarImg");
