@@ -10,6 +10,8 @@
     />
     <meta name="robots" content="index,follow" />
 
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='41' font-family='system-ui,sans-serif' font-size='26' font-weight='800' fill='%23fbfbfd' text-anchor='middle'%3EJR%3C/text%3E%3C/svg%3E" />
+
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Jesper Runneboom, IT Projectmanager (CV)" />
     <meta
@@ -18,6 +20,10 @@
     />
     <meta property="og:url" content="https://jesperrunneboom.github.io/" />
     <meta property="og:locale" content="nl_NL" />
+    <meta property="og:image" content="https://jesperrunneboom.github.io/assets/jesper.jpg" />
+    <meta property="og:image:width" content="2587" />
+    <meta property="og:image:height" content="2587" />
+    <meta property="og:image:alt" content="Profielfoto van Jesper Runneboom" />
 
     <title>Jesper Runneboom, IT Projectmanager (CV)</title>
 
@@ -325,6 +331,32 @@
 
       .parText { margin: 0; }
 
+      .certList {
+        margin: 10px 0 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: var(--measure);
+      }
+      .certItem {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--hairline);
+      }
+      .certItem:last-child { border-bottom: none; }
+      .certName { font-weight: 700; }
+      .certOrg {
+        font-family: var(--mono);
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
       .callout {
         padding: 12px 0 0;
         max-width: var(--measure);
@@ -349,16 +381,40 @@
         flex-wrap: wrap;
       }
 
+      .progressBar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0;
+        background: var(--link);
+        z-index: 100;
+        transition: width 60ms linear;
+        pointer-events: none;
+      }
+
+      .fadeIn {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fadeIn.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
       @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
         .btn { transition: none !important; }
         .btn:hover { transform: none !important; }
+        .fadeIn { opacity: 1 !important; transform: none !important; transition: none !important; }
+        .progressBar { transition: none !important; }
       }
 
       @page { size: A4; margin: 10mm; }
 
       @media print {
-        .topbarWrap, .skipLink { display: none !important; }
+        .topbarWrap, .skipLink, .progressBar { display: none !important; }
         body { background: #fff !important; color: #000 !important; font-size: 11pt; line-height: 1.35; }
         a { color: #000 !important; text-decoration: none !important; }
 
@@ -389,10 +445,35 @@
         "jobTitle":"IT Projectmanager",
         "address":{"@type":"PostalAddress","addressLocality":"Hellendoorn","addressCountry":"NL"},
         "email":"mailto:jesperrunneboom@live.nl",
+        "telephone":"+31618933307",
         "url":"https://jesperrunneboom.github.io/",
+        "image":"https://jesperrunneboom.github.io/assets/jesper.jpg",
         "sameAs":[ "https://www.linkedin.com/in/jesper-runneboom-245773b5/" ],
         "knowsLanguage":[ "nl", "en", "de", "es" ],
+        "hasOccupation":[
+          {
+            "@type":"Occupation",
+            "name":"IT Projectmanager",
+            "occupationalCategory":"15-1199.09",
+            "skills":["PRINCE2","Stakeholder Management","Project Planning","Risk Management","Jira","Case Management Systems"]
+          }
+        ],
+        "worksFor":{
+          "@type":"Organization",
+          "name":"Atabix B.V.",
+          "url":"https://www.atabix.nl/"
+        },
+        "alumniOf":[
+          {
+            "@type":"CollegeOrUniversity",
+            "name":"Rijksuniversiteit Groningen",
+            "url":"https://www.rug.nl/"
+          }
+        ],
         "hasCredential":[
+          { "@type":"EducationalOccupationalCredential", "name":"MA Geschiedenis", "credentialCategory":"Master" },
+          { "@type":"EducationalOccupationalCredential", "name":"BA Geschiedenis", "credentialCategory":"Bachelor" },
+          { "@type":"EducationalOccupationalCredential", "name":"PRINCE2 Foundation", "credentialCategory":"Professional certification" },
           { "@type":"EducationalOccupationalCredential", "name":"Rijbewijs B", "credentialCategory":"Driving license" }
         ]
       }
@@ -400,12 +481,14 @@
   </head>
 
   <body>
-    <a class="skipLink" href="#main">Direct naar inhoud</a>
+    <div class="progressBar" id="progressBar" aria-hidden="true"></div>
+    <a class="skipLink" href="#main" data-i18n="skipLink">Direct naar inhoud</a>
 
     <div class="topbarWrap" aria-label="Acties">
       <div class="topbar">
+        <button class="btn" id="langBtn" type="button" aria-label="Switch to English">EN</button>
         <button class="btn" id="themeBtn" type="button" aria-label="Thema wisselen" aria-pressed="false">Donker</button>
-        <button class="btn" id="pdfBtn" type="button" aria-label="Download als PDF">Download PDF</button>
+        <button class="btn" id="pdfBtn" type="button" aria-label="Download als PDF" data-i18n="pdfBtn">Download PDF</button>
       </div>
     </div>
 
@@ -415,11 +498,11 @@
           <div class="hero">
             <div class="heroText">
               <h1>Jesper Runneboom</h1>
-              <p class="subtitle">IT Projectmanager • Publieke sector • Informatie en procesmanagement</p>
+              <p class="subtitle" data-i18n="subtitle">IT Projectmanager • Publieke sector • Informatie en procesmanagement</p>
 
-              <p class="lede">
+              <p class="lede" data-i18n="lede">
                 <strong>Ik realiseer voorspelbare IT veranderingen in de publieke sector</strong> door techniek, proces en mensen te verbinden.
-                Je krijgt grip op besluitvorming, risico’s en voortgang, met heldere afspraken en een nette oplevering die beheer overdraagbaar maakt.
+                Je krijgt grip op besluitvorming, risico's en voortgang, met heldere afspraken en een nette oplevering die beheer overdraagbaar maakt.
               </p>
 
               <div class="metaRow" aria-label="Contactgegevens">
@@ -448,7 +531,8 @@
                 alt="Profielfoto van Jesper Runneboom"
                 width="270"
                 height="320"
-                loading="eager"
+                sizes="(max-width: 760px) 100vw, clamp(200px, 22vw, 270px)"
+                fetchpriority="high"
                 decoding="async"
               />
               <div class="avatarFallback" id="avatarFallback" aria-hidden="true" style="display:none;">JR</div>
@@ -460,14 +544,14 @@
 
         <section aria-labelledby="results">
           <div class="sectionTitle">
-            <h2 id="results">Wat je aan mij hebt</h2>
-            <span class="sectionNote">kort en concreet</span>
+            <h2 id="results" data-i18n="resultsTitle">Wat je aan mij hebt</h2>
+            <span class="sectionNote" data-i18n="resultsNote">kort en concreet</span>
           </div>
 
           <ul class="bullets">
-            <li><strong>Migraties on prem naar SaaS</strong> gestuurd voor gemeenten, met minimale verstoring en duidelijke beheerafspraken.</li>
-            <li><strong>Eén aanspreekpunt</strong> voor klanten en sturing naar ontwikkelteams, prioriteiten en voortgang geborgd in Jira.</li>
-            <li><strong>Scope en besluitvorming</strong> scherp gehouden met een beslislog, risico en knelpuntenoverzicht en een nette oplevering met overdraagbare documentatie.</li>
+            <li data-i18n="result1"><strong>Migraties on prem naar SaaS</strong> gestuurd voor gemeenten, met minimale verstoring en duidelijke beheerafspraken.</li>
+            <li data-i18n="result2"><strong>Eén aanspreekpunt</strong> voor klanten en sturing naar ontwikkelteams, prioriteiten en voortgang geborgd in Jira.</li>
+            <li data-i18n="result3"><strong>Scope en besluitvorming</strong> scherp gehouden met een beslislog, risico en knelpuntenoverzicht en een nette oplevering met overdraagbare documentatie.</li>
           </ul>
 
           <div class="sectionDivider" aria-hidden="true"></div>
@@ -475,23 +559,23 @@
 
         <section aria-labelledby="skills">
           <div class="sectionTitle">
-            <h2 id="skills">Kerncompetenties</h2>
-            <span class="sectionNote">waar ik sterk in ben</span>
+            <h2 id="skills" data-i18n="skillsTitle">Kerncompetenties</h2>
+            <span class="sectionNote" data-i18n="skillsNote">waar ik sterk in ben</span>
           </div>
 
           <div class="twoCol">
             <div>
               <ul class="bullets">
-                <li>Stakeholdermanagement, verwachtingen en communicatie</li>
-                <li>Projectplanning en sturing, scope, afhankelijkheden en voortgang</li>
-                <li>Risico en knelpuntenbeheer, mitigaties, escalaties en besluitvorming</li>
-                <li>Eisen en documentatie, werkinstructies, overdracht en beheerafspraken</li>
-                <li>Verandering en adoptie, acceptatie, nazorg en borging</li>
+                <li data-i18n="skill1">Stakeholdermanagement, verwachtingen en communicatie</li>
+                <li data-i18n="skill2">Projectplanning en sturing, scope, afhankelijkheden en voortgang</li>
+                <li data-i18n="skill3">Risico en knelpuntenbeheer, mitigaties, escalaties en besluitvorming</li>
+                <li data-i18n="skill4">Eisen en documentatie, werkinstructies, overdracht en beheerafspraken</li>
+                <li data-i18n="skill5">Verandering en adoptie, acceptatie, nazorg en borging</li>
               </ul>
             </div>
             <div>
               <ul class="bullets">
-                <li>Zaaksystemen, DMS en archiefsystemen</li>
+                <li data-i18n="skill6">Zaaksystemen, DMS en archiefsystemen</li>
                 <li>M365</li>
                 <li>Jira</li>
                 <li>Linux, basis</li>
@@ -503,42 +587,86 @@
           <div class="sectionDivider" aria-hidden="true"></div>
         </section>
 
+        <section aria-labelledby="education">
+          <div class="sectionTitle">
+            <h2 id="education" data-i18n="eduTitle">Opleiding</h2>
+          </div>
+
+          <ul class="certList">
+            <li class="certItem">
+              <span class="certName" data-i18n="edu1Name">MA Geschiedenis</span>
+              <span class="certOrg" data-i18n="edu1Org">Rijksuniversiteit Groningen</span>
+            </li>
+            <li class="certItem">
+              <span class="certName" data-i18n="edu2Name">BA Geschiedenis</span>
+              <span class="certOrg" data-i18n="edu2Org">Rijksuniversiteit Groningen</span>
+            </li>
+            <li class="certItem">
+              <span class="certName" data-i18n="edu3Name">MBO Grafisch Design</span>
+            </li>
+            <li class="certItem">
+              <span class="certName" data-i18n="edu4Name">HBO Propedeuse Sociaal Werk</span>
+            </li>
+          </ul>
+
+          <div class="sectionDivider" aria-hidden="true"></div>
+        </section>
+
+        <section aria-labelledby="certifications">
+          <div class="sectionTitle">
+            <h2 id="certifications" data-i18n="certTitle">Certificeringen</h2>
+            <span class="sectionNote" data-i18n="certNote">behaald</span>
+          </div>
+
+          <ul class="certList">
+            <li class="certItem">
+              <span class="certName" data-i18n="cert1Name">PRINCE2 Foundation</span>
+              <span class="certOrg" data-i18n="cert1Org">PeopleCert / AXELOS</span>
+            </li>
+            <li class="certItem">
+              <span class="certName" data-i18n="cert2Name">Rijbewijs B</span>
+            </li>
+          </ul>
+
+          <div class="sectionDivider" aria-hidden="true"></div>
+        </section>
+
         <section class="printBreakBefore" aria-labelledby="experience">
           <div class="sectionTitle">
-            <h2 id="experience">Ervaring</h2>
-            <span class="sectionNote">probleem, aanpak, resultaat</span>
+            <h2 id="experience" data-i18n="expTitle">Ervaring</h2>
+            <span class="sectionNote" data-i18n="expNote">probleem, aanpak, resultaat</span>
           </div>
 
           <article class="entry">
             <div class="entryHead">
               <p class="role">
-                <span class="org"><a href="https://www.atabix.nl/" rel="noopener">Atabix B.V.</a></span> — Projectmanager
+                <span class="org"><a href="https://www.atabix.nl/" rel="noopener">Atabix B.V.</a></span> — <span data-i18n="role1">Projectmanager</span>
               </p>
-              <span class="whenWhere">Mei 2025 tot heden · Amsterdam en Arnhem, hybride</span>
+              <span class="whenWhere" data-i18n="when1">Mei 2025 tot heden · Amsterdam en Arnhem, hybride</span>
             </div>
 
-            <p class="context">Zaaksystemen, migraties, stakeholdermanagement, sturing ontwikkelteam</p>
+            <p class="context" data-i18n="ctx1">Zaaksystemen, migraties, stakeholdermanagement, sturing ontwikkelteam</p>
 
             <div class="par" aria-label="Probleem aanpak resultaat">
               <div class="parBlock">
-                <span class="parLabel">Probleem</span>
-                <p class="parText">
+                <span class="parLabel" data-i18n="parProb">Probleem</span>
+                <p class="parText" data-i18n="prob1">
                   Gemeenten wilden gecontroleerd migreren naar SaaS met minimale verstoring, terwijl inrichting, koppelingen en afhankelijkheden per organisatie sterk verschillen.
                 </p>
               </div>
 
               <div class="parBlock">
-                <span class="parLabel">Aanpak</span>
-                <p class="parText">
-                  Ik stuur op planning, duidelijke afspraken en vaste besluitvorming. Ik maak risico’s zichtbaar, leg keuzes vast in een beslislog
+                <span class="parLabel" data-i18n="parApp">Aanpak</span>
+                <p class="parText" data-i18n="app1">
+                  Ik stuur op planning, duidelijke afspraken en vaste besluitvorming. Ik maak risico's zichtbaar, leg keuzes vast in een beslislog
                   en borg overdracht met beheerafspraken en documentatie. Ik bewaak daarnaast prioriteiten en voortgang richting het ontwikkelteam in Jira.
                 </p>
               </div>
 
               <div class="parBlock">
-                <span class="parLabel">Resultaat</span>
-                <p class="parText">
-                  Migraties afgerond met transparante besluitvorming, beheersbare risico’s en een nette oplevering, inclusief overdraagbare afspraken en documentatie.
+                <span class="parLabel" data-i18n="parRes">Resultaat</span>
+                <p class="parText" data-i18n="res1">
+                  Migraties afgerond met transparante besluitvorming, beheersbare risico's en een nette oplevering, inclusief overdraagbare afspraken en documentatie.
                 </p>
               </div>
             </div>
@@ -547,32 +675,32 @@
           <article class="entry">
             <div class="entryHead">
               <p class="role">
-                <span class="org"><a href="https://www.mozard.nl/" rel="noopener">Mozard B.V.</a></span> — Consultant informatie en procesmanagement
+                <span class="org"><a href="https://www.mozard.nl/" rel="noopener">Mozard B.V.</a></span> — <span data-i18n="role2">Consultant informatie en procesmanagement</span>
               </p>
-              <span class="whenWhere">Mei 2024 tot mei 2025 · Amsterdam en Arnhem, hybride</span>
+              <span class="whenWhere" data-i18n="when2">Mei 2024 tot mei 2025 · Amsterdam en Arnhem, hybride</span>
             </div>
 
-            <p class="context">Procesoptimalisatie, functionele inrichting, stakeholdermanagement</p>
+            <p class="context" data-i18n="ctx2">Procesoptimalisatie, functionele inrichting, stakeholdermanagement</p>
 
             <div class="par" aria-label="Probleem aanpak resultaat">
               <div class="parBlock">
-                <span class="parLabel">Probleem</span>
-                <p class="parText">
+                <span class="parLabel" data-i18n="parProb">Probleem</span>
+                <p class="parText" data-i18n="prob2">
                   Organisaties moesten processen en inrichting laten aansluiten op het zaaksysteem, met heldere eisen, acceptatiecriteria en werkafspraken tussen business en IT.
                 </p>
               </div>
 
               <div class="parBlock">
-                <span class="parLabel">Aanpak</span>
-                <p class="parText">
+                <span class="parLabel" data-i18n="parApp">Aanpak</span>
+                <p class="parText" data-i18n="app2">
                   Ik vertaalde wensen naar concrete eisen, begeleidde stakeholders en richtte functioneel in. Ik stelde werkinstructies op
                   en faciliteerde testen, acceptatie en overdracht.
                 </p>
               </div>
 
               <div class="parBlock">
-                <span class="parLabel">Resultaat</span>
-                <p class="parText">
+                <span class="parLabel" data-i18n="parRes">Resultaat</span>
+                <p class="parText" data-i18n="res2">
                   Werkbare procesafspraken en beheerbare inrichting opgeleverd, met hogere gebruikersacceptatie en minder ruis in beheer.
                 </p>
               </div>
@@ -584,32 +712,234 @@
 
         <section aria-labelledby="contact">
           <div class="sectionTitle">
-            <h2 id="contact">Contact</h2>
-            <span class="sectionNote">snel schakelen</span>
+            <h2 id="contact" data-i18n="contactTitle">Contact</h2>
+            <span class="sectionNote" data-i18n="contactNote">snel schakelen</span>
           </div>
 
           <div class="callout">
-            <p style="margin: 0; max-width: var(--measure);">
+            <p style="margin: 0; max-width: var(--measure);" data-i18n="contactText">
               Beschikbaar voor projectmanagement en implementaties of migraties in de publieke sector.
               Ik werk met heldere scope, een vaste cadans en afspraken die zorgen voor een nette oplevering en soepele overdracht naar beheer.
             </p>
 
             <div class="calloutActions">
-              <button class="btn" id="copyEmailBtn" type="button" aria-label="Kopieer email">Kopieer e-mail</button>
-              <a class="btn" href="mailto:jesperrunneboom@live.nl">Mail</a>
-              <a class="btn" href="tel:+31618933307">Bel</a>
+              <button class="btn" id="copyEmailBtn" type="button" aria-label="Kopieer email" data-i18n="copyEmail">Kopieer e-mail</button>
+              <a class="btn" href="mailto:jesperrunneboom@live.nl" data-i18n="mail">Mail</a>
+              <a class="btn" href="tel:+31618933307" data-i18n="call">Bel</a>
             </div>
           </div>
         </section>
 
         <footer>
           <span>© <span id="year"></span> Jesper Runneboom</span>
-          <span class="muted">GitHub Pages • <a href="#" id="backToTop">Naar boven</a></span>
+          <span class="muted">GitHub Pages • <a href="#" id="backToTop" data-i18n="backToTop">Naar boven</a></span>
         </footer>
       </main>
     </div>
 
     <script>
+      /* ---- Language toggle ---- */
+      const LANG_KEY = "cv_lang";
+
+      const translations = {
+        nl: {
+          subtitle: "IT Projectmanager \u2022 Publieke sector \u2022 Informatie en procesmanagement",
+          lede: "<strong>Ik realiseer voorspelbare IT veranderingen in de publieke sector</strong> door techniek, proces en mensen te verbinden. Je krijgt grip op besluitvorming, risico\u2019s en voortgang, met heldere afspraken en een nette oplevering die beheer overdraagbaar maakt.",
+          resultsTitle: "Wat je aan mij hebt",
+          resultsNote: "kort en concreet",
+          result1: "<strong>Migraties on prem naar SaaS</strong> gestuurd voor gemeenten, met minimale verstoring en duidelijke beheerafspraken.",
+          result2: "<strong>E\u00e9n aanspreekpunt</strong> voor klanten en sturing naar ontwikkelteams, prioriteiten en voortgang geborgd in Jira.",
+          result3: "<strong>Scope en besluitvorming</strong> scherp gehouden met een beslislog, risico en knelpuntenoverzicht en een nette oplevering met overdraagbare documentatie.",
+          skillsTitle: "Kerncompetenties",
+          skillsNote: "waar ik sterk in ben",
+          skill1: "Stakeholdermanagement, verwachtingen en communicatie",
+          skill2: "Projectplanning en sturing, scope, afhankelijkheden en voortgang",
+          skill3: "Risico en knelpuntenbeheer, mitigaties, escalaties en besluitvorming",
+          skill4: "Eisen en documentatie, werkinstructies, overdracht en beheerafspraken",
+          skill5: "Verandering en adoptie, acceptatie, nazorg en borging",
+          skill6: "Zaaksystemen, DMS en archiefsystemen",
+          expTitle: "Ervaring",
+          expNote: "probleem, aanpak, resultaat",
+          role1: "Projectmanager",
+          when1: "Mei 2025 tot heden \u00b7 Amsterdam en Arnhem, hybride",
+          ctx1: "Zaaksystemen, migraties, stakeholdermanagement, sturing ontwikkelteam",
+          prob1: "Gemeenten wilden gecontroleerd migreren naar SaaS met minimale verstoring, terwijl inrichting, koppelingen en afhankelijkheden per organisatie sterk verschillen.",
+          app1: "Ik stuur op planning, duidelijke afspraken en vaste besluitvorming. Ik maak risico\u2019s zichtbaar, leg keuzes vast in een beslislog en borg overdracht met beheerafspraken en documentatie. Ik bewaak daarnaast prioriteiten en voortgang richting het ontwikkelteam in Jira.",
+          res1: "Migraties afgerond met transparante besluitvorming, beheersbare risico\u2019s en een nette oplevering, inclusief overdraagbare afspraken en documentatie.",
+          role2: "Consultant informatie en procesmanagement",
+          when2: "Mei 2024 tot mei 2025 \u00b7 Amsterdam en Arnhem, hybride",
+          ctx2: "Procesoptimalisatie, functionele inrichting, stakeholdermanagement",
+          prob2: "Organisaties moesten processen en inrichting laten aansluiten op het zaaksysteem, met heldere eisen, acceptatiecriteria en werkafspraken tussen business en IT.",
+          app2: "Ik vertaalde wensen naar concrete eisen, begeleidde stakeholders en richtte functioneel in. Ik stelde werkinstructies op en faciliteerde testen, acceptatie en overdracht.",
+          res2: "Werkbare procesafspraken en beheerbare inrichting opgeleverd, met hogere gebruikersacceptatie en minder ruis in beheer.",
+          contactTitle: "Contact",
+          contactNote: "snel schakelen",
+          contactText: "Beschikbaar voor projectmanagement en implementaties of migraties in de publieke sector. Ik werk met heldere scope, een vaste cadans en afspraken die zorgen voor een nette oplevering en soepele overdracht naar beheer.",
+          copyEmail: "Kopieer e-mail",
+          mail: "Mail",
+          call: "Bel",
+          backToTop: "Naar boven",
+          pdfBtn: "Download PDF",
+          eduTitle: "Opleiding",
+          edu1Name: "MA Geschiedenis",
+          edu1Org: "Rijksuniversiteit Groningen",
+          edu2Name: "BA Geschiedenis",
+          edu2Org: "Rijksuniversiteit Groningen",
+          edu3Name: "MBO Grafisch Design",
+          edu4Name: "HBO Propedeuse Sociaal Werk",
+          certTitle: "Certificeringen",
+          certNote: "behaald",
+          cert1Name: "PRINCE2 Foundation",
+          cert1Org: "PeopleCert / AXELOS",
+          cert2Name: "Rijbewijs B",
+          parProb: "Probleem",
+          parApp: "Aanpak",
+          parRes: "Resultaat",
+          skipLink: "Direct naar inhoud",
+        },
+        en: {
+          subtitle: "IT Project Manager \u2022 Public sector \u2022 Information and process management",
+          lede: "<strong>I deliver predictable IT transformations in the public sector</strong> by connecting technology, process, and people. You get a grip on decision-making, risks, and progress, with clear agreements and a clean handover that makes operations transferable.",
+          resultsTitle: "What I bring",
+          resultsNote: "short and concrete",
+          result1: "<strong>On-prem to SaaS migrations</strong> managed for municipalities, with minimal disruption and clear maintenance agreements.",
+          result2: "<strong>Single point of contact</strong> for clients with steering of development teams, priorities and progress tracked in Jira.",
+          result3: "<strong>Scope and decision-making</strong> kept sharp with a decision log, risk overview, and a clean delivery with transferable documentation.",
+          skillsTitle: "Core competencies",
+          skillsNote: "where I excel",
+          skill1: "Stakeholder management, expectations, and communication",
+          skill2: "Project planning and steering, scope, dependencies, and progress",
+          skill3: "Risk and issue management, mitigations, escalations, and decision-making",
+          skill4: "Requirements and documentation, work instructions, handover and maintenance",
+          skill5: "Change and adoption, acceptance, aftercare, and embedding",
+          skill6: "Case management systems, DMS, and archive systems",
+          expTitle: "Experience",
+          expNote: "problem, approach, result",
+          role1: "Project Manager",
+          when1: "May 2025 to present \u00b7 Amsterdam and Arnhem, hybrid",
+          ctx1: "Case management systems, migrations, stakeholder management, dev team steering",
+          prob1: "Municipalities needed a controlled migration to SaaS with minimal disruption, while configurations, integrations, and dependencies varied greatly per organization.",
+          app1: "I manage planning, clear agreements, and structured decision-making. I make risks visible, record decisions in a decision log, and secure handover with maintenance agreements and documentation. I also manage priorities and progress towards the development team in Jira.",
+          res1: "Migrations completed with transparent decision-making, manageable risks, and a clean delivery, including transferable agreements and documentation.",
+          role2: "Consultant information and process management",
+          when2: "May 2024 to May 2025 \u00b7 Amsterdam and Arnhem, hybrid",
+          ctx2: "Process optimization, functional configuration, stakeholder management",
+          prob2: "Organizations needed to align processes and configurations with the case management system, with clear requirements, acceptance criteria, and working agreements between business and IT.",
+          app2: "I translated wishes into concrete requirements, guided stakeholders, and configured the system functionally. I wrote work instructions and facilitated testing, acceptance, and handover.",
+          res2: "Workable process agreements and manageable configurations delivered, with higher user acceptance and less noise in operations.",
+          contactTitle: "Contact",
+          contactNote: "get in touch",
+          contactText: "Available for project management and implementations or migrations in the public sector. I work with clear scope, a fixed cadence, and agreements that ensure a clean delivery and smooth handover to operations.",
+          copyEmail: "Copy e-mail",
+          mail: "Mail",
+          call: "Call",
+          backToTop: "Back to top",
+          pdfBtn: "Download PDF",
+          eduTitle: "Education",
+          edu1Name: "MA History",
+          edu1Org: "University of Groningen",
+          edu2Name: "BA History",
+          edu2Org: "University of Groningen",
+          edu3Name: "MBO Graphic Design",
+          edu4Name: "HBO Propaedeutic Social Work",
+          certTitle: "Certifications",
+          certNote: "obtained",
+          cert1Name: "PRINCE2 Foundation",
+          cert1Org: "PeopleCert / AXELOS",
+          cert2Name: "Driving license B",
+          parProb: "Problem",
+          parApp: "Approach",
+          parRes: "Result",
+          skipLink: "Skip to content",
+        }
+      };
+
+      function getLang() {
+        const saved = localStorage.getItem(LANG_KEY);
+        if (saved === "nl" || saved === "en") return saved;
+        return "nl";
+      }
+
+      function setI18n(el, key, lang) {
+        if (!el) return;
+        const t = translations[lang];
+        if (t && t[key] != null) el.innerHTML = t[key];
+      }
+
+      function applyLang(lang) {
+        document.documentElement.lang = lang;
+        const t = translations[lang];
+        if (!t) return;
+
+        setI18n(document.querySelector("[data-i18n='subtitle']"), "subtitle", lang);
+        setI18n(document.querySelector("[data-i18n='lede']"), "lede", lang);
+        setI18n(document.querySelector("[data-i18n='resultsTitle']"), "resultsTitle", lang);
+        setI18n(document.querySelector("[data-i18n='resultsNote']"), "resultsNote", lang);
+        setI18n(document.querySelector("[data-i18n='result1']"), "result1", lang);
+        setI18n(document.querySelector("[data-i18n='result2']"), "result2", lang);
+        setI18n(document.querySelector("[data-i18n='result3']"), "result3", lang);
+        setI18n(document.querySelector("[data-i18n='skillsTitle']"), "skillsTitle", lang);
+        setI18n(document.querySelector("[data-i18n='skillsNote']"), "skillsNote", lang);
+        setI18n(document.querySelector("[data-i18n='skill1']"), "skill1", lang);
+        setI18n(document.querySelector("[data-i18n='skill2']"), "skill2", lang);
+        setI18n(document.querySelector("[data-i18n='skill3']"), "skill3", lang);
+        setI18n(document.querySelector("[data-i18n='skill4']"), "skill4", lang);
+        setI18n(document.querySelector("[data-i18n='skill5']"), "skill5", lang);
+        setI18n(document.querySelector("[data-i18n='skill6']"), "skill6", lang);
+        setI18n(document.querySelector("[data-i18n='eduTitle']"), "eduTitle", lang);
+        setI18n(document.querySelector("[data-i18n='edu1Name']"), "edu1Name", lang);
+        setI18n(document.querySelector("[data-i18n='edu1Org']"), "edu1Org", lang);
+        setI18n(document.querySelector("[data-i18n='edu2Name']"), "edu2Name", lang);
+        setI18n(document.querySelector("[data-i18n='edu2Org']"), "edu2Org", lang);
+        setI18n(document.querySelector("[data-i18n='edu3Name']"), "edu3Name", lang);
+        setI18n(document.querySelector("[data-i18n='edu4Name']"), "edu4Name", lang);
+        setI18n(document.querySelector("[data-i18n='certTitle']"), "certTitle", lang);
+        setI18n(document.querySelector("[data-i18n='certNote']"), "certNote", lang);
+        setI18n(document.querySelector("[data-i18n='cert1Name']"), "cert1Name", lang);
+        setI18n(document.querySelector("[data-i18n='cert1Org']"), "cert1Org", lang);
+        setI18n(document.querySelector("[data-i18n='cert2Name']"), "cert2Name", lang);
+        setI18n(document.querySelector("[data-i18n='expTitle']"), "expTitle", lang);
+        setI18n(document.querySelector("[data-i18n='expNote']"), "expNote", lang);
+        setI18n(document.querySelector("[data-i18n='role1']"), "role1", lang);
+        setI18n(document.querySelector("[data-i18n='when1']"), "when1", lang);
+        setI18n(document.querySelector("[data-i18n='ctx1']"), "ctx1", lang);
+        setI18n(document.querySelector("[data-i18n='prob1']"), "prob1", lang);
+        setI18n(document.querySelector("[data-i18n='app1']"), "app1", lang);
+        setI18n(document.querySelector("[data-i18n='res1']"), "res1", lang);
+        setI18n(document.querySelector("[data-i18n='role2']"), "role2", lang);
+        setI18n(document.querySelector("[data-i18n='when2']"), "when2", lang);
+        setI18n(document.querySelector("[data-i18n='ctx2']"), "ctx2", lang);
+        setI18n(document.querySelector("[data-i18n='prob2']"), "prob2", lang);
+        setI18n(document.querySelector("[data-i18n='app2']"), "app2", lang);
+        setI18n(document.querySelector("[data-i18n='res2']"), "res2", lang);
+        setI18n(document.querySelector("[data-i18n='contactTitle']"), "contactTitle", lang);
+        setI18n(document.querySelector("[data-i18n='contactNote']"), "contactNote", lang);
+        setI18n(document.querySelector("[data-i18n='contactText']"), "contactText", lang);
+        setI18n(document.querySelector("[data-i18n='copyEmail']"), "copyEmail", lang);
+        setI18n(document.querySelector("[data-i18n='mail']"), "mail", lang);
+        setI18n(document.querySelector("[data-i18n='call']"), "call", lang);
+        setI18n(document.querySelector("[data-i18n='backToTop']"), "backToTop", lang);
+        setI18n(document.querySelector("[data-i18n='pdfBtn']"), "pdfBtn", lang);
+        setI18n(document.querySelector("[data-i18n='skipLink']"), "skipLink", lang);
+
+        document.querySelectorAll("[data-i18n='parProb']").forEach(el => el.textContent = t.parProb);
+        document.querySelectorAll("[data-i18n='parApp']").forEach(el => el.textContent = t.parApp);
+        document.querySelectorAll("[data-i18n='parRes']").forEach(el => el.textContent = t.parRes);
+
+        const langBtn = document.getElementById("langBtn");
+        if (langBtn) {
+          langBtn.textContent = lang === "nl" ? "EN" : "NL";
+          langBtn.setAttribute("aria-label", lang === "nl" ? "Switch to English" : "Wissel naar Nederlands");
+        }
+      }
+
+      function toggleLang() {
+        const current = getLang();
+        const next = current === "nl" ? "en" : "nl";
+        localStorage.setItem(LANG_KEY, next);
+        applyLang(next);
+      }
+
       const THEME_KEY = "cv_theme";
 
       function applyTheme(theme) {
@@ -692,6 +1022,7 @@
 
       applyTheme(getPreferredTheme());
       syncThemeBtn();
+      applyLang(getLang());
       initAvatar();
 
       document.getElementById("themeBtn")?.addEventListener("click", () => {
@@ -699,6 +1030,7 @@
         syncThemeBtn();
       });
 
+      document.getElementById("langBtn")?.addEventListener("click", toggleLang);
       document.getElementById("pdfBtn")?.addEventListener("click", openPdfPrintDialog);
       document.getElementById("copyEmailBtn")?.addEventListener("click", copyEmail);
 
@@ -708,6 +1040,30 @@
         const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
       });
+
+      /* Scroll progress bar */
+      const progressBar = document.getElementById("progressBar");
+      window.addEventListener("scroll", () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        if (progressBar) progressBar.style.width = progress + "%";
+      }, { passive: true });
+
+      /* Fade-in on scroll */
+      const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduceMotion) {
+        document.querySelectorAll("section, footer").forEach((el) => el.classList.add("fadeIn"));
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        document.querySelectorAll(".fadeIn").forEach((el) => observer.observe(el));
+      }
 
       const media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
       if (media) {
