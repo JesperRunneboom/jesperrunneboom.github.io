@@ -388,24 +388,10 @@
         pointer-events: none;
       }
 
-      /* Hide off-screen sections only on screen; print never sees opacity:0 */
-      @media screen {
-        .fadeIn {
-          opacity: 0;
-          transform: translateY(18px);
-          transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-      }
-      .fadeIn.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
       @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
         .btn { transition: none !important; }
         .btn:hover { transform: none !important; }
-        .fadeIn { opacity: 1 !important; transform: none !important; transition: none !important; }
         .progressBar { transition: none !important; }
       }
 
@@ -417,9 +403,6 @@
 
         /* Hide interactive/decorative elements */
         .topbarWrap, .skipLink, .progressBar, .calloutActions { display: none !important; }
-
-        /* Reset animations — fadeIn elements must be visible */
-        .fadeIn { opacity: 1 !important; transform: none !important; transition: none !important; }
 
         /* Base typography */
         body { background: #fff !important; color: #000 !important; font-size: 10.5pt; line-height: 1.35; }
@@ -1026,26 +1009,22 @@
         });
       }
 
-      /* Print helpers — remove fadeIn class entirely so opacity:0 never applies */
-      let _fadeEls = [];
-      function prepareForPrint() {
-        _fadeEls = [...document.querySelectorAll(".fadeIn")];
-        _fadeEls.forEach((el) => el.classList.remove("fadeIn"));
+      /* Print helpers — clear ALL inline animation styles so nothing is hidden */
+      function clearAnimationStyles() {
+        document.querySelectorAll("section, footer").forEach((el) => {
+          el.style.opacity = "";
+          el.style.transform = "";
+          el.style.transition = "";
+        });
       }
-      function restoreAfterPrint() {
-        _fadeEls.forEach((el) => { el.classList.add("fadeIn"); el.classList.add("visible"); });
-        _fadeEls = [];
-      }
-      window.addEventListener("beforeprint", prepareForPrint);
-      window.addEventListener("afterprint", restoreAfterPrint);
+      window.addEventListener("beforeprint", clearAnimationStyles);
 
       function openPdfPrintDialog() {
         const originalTitle = document.title;
         document.title = "Jesper Runneboom - CV";
-        prepareForPrint();
+        clearAnimationStyles();
         window.print();
         document.title = originalTitle;
-        restoreAfterPrint();
       }
 
       function initAvatar() {
@@ -1111,19 +1090,24 @@
         if (progressBar) progressBar.style.width = progress + "%";
       }, { passive: true });
 
-      /* Fade-in on scroll */
+      /* Fade-in on scroll — uses inline styles so print can simply clear them */
       const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (!reduceMotion) {
-        document.querySelectorAll("section, footer").forEach((el) => el.classList.add("fadeIn"));
+        document.querySelectorAll("section, footer").forEach((el) => {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(18px)";
+          el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+        });
         const observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "translateY(0)";
               observer.unobserve(entry.target);
             }
           });
         }, { threshold: 0.1 });
-        document.querySelectorAll(".fadeIn").forEach((el) => observer.observe(el));
+        document.querySelectorAll("section, footer").forEach((el) => observer.observe(el));
       }
 
       const media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
