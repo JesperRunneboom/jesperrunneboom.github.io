@@ -388,10 +388,13 @@
         pointer-events: none;
       }
 
-      .fadeIn {
-        opacity: 0;
-        transform: translateY(18px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
+      /* Hide off-screen sections only on screen; print never sees opacity:0 */
+      @media screen {
+        .fadeIn {
+          opacity: 0;
+          transform: translateY(18px);
+          transition: opacity 0.5s ease, transform 0.5s ease;
+        }
       }
       .fadeIn.visible {
         opacity: 1;
