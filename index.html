@@ -464,7 +464,7 @@
         .role { font-size: 1rem !important; }
 
         /* Page break control */
-        .entry, footer, section { break-inside: avoid; page-break-inside: avoid; }
+        .entry, footer { break-inside: avoid; page-break-inside: avoid; }
         .printBreakBefore { break-before: page; page-break-before: always; }
       }
     </style>
@@ -1023,9 +1023,16 @@
       function openPdfPrintDialog() {
         const originalTitle = document.title;
         document.title = "Jesper Runneboom - CV";
+        /* Force all fadeIn elements visible before printing */
+        document.querySelectorAll(".fadeIn").forEach((el) => el.classList.add("visible"));
         window.print();
         document.title = originalTitle;
       }
+
+      /* Also handle Ctrl+P / browser-initiated print */
+      window.addEventListener("beforeprint", () => {
+        document.querySelectorAll(".fadeIn").forEach((el) => el.classList.add("visible"));
+      });
 
       function initAvatar() {
         const img = document.getElementById("avatarImg");
