@@ -410,6 +410,7 @@
 
       @media print {
         .topbarWrap, .skipLink, .progressBar { display: none !important; }
+        .fadeIn { opacity: 1 !important; transform: none !important; transition: none !important; }
         body { background: #fff !important; color: #000 !important; font-size: 11pt; line-height: 1.35; }
         a { color: #000 !important; text-decoration: none !important; }
 
@@ -985,6 +986,7 @@
 
       function openPdfPrintDialog() {
         document.title = "Jesper Runneboom - CV";
+        document.querySelectorAll(".fadeIn").forEach((el) => el.classList.add("visible"));
         window.print();
       }
 
