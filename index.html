@@ -406,6 +406,8 @@
         .progressBar { transition: none !important; }
       }
 
+      .printPromo { display: none; }
+
       @page { size: A4; margin: 10mm; }
 
       @media print {
@@ -428,8 +430,33 @@
           min-height: 240px !important;
         }
 
+        .calloutActions { display: none !important; }
+
         .entry, footer { break-inside: avoid; page-break-inside: avoid; }
         .printBreakBefore { break-before: page; page-break-before: always; }
+
+        .printPromo {
+          display: block;
+          margin-top: 28pt;
+          padding: 12pt 16pt;
+          border: 1.5pt solid #0f172a;
+          border-radius: 6pt;
+          text-align: center;
+          break-inside: avoid;
+          page-break-inside: avoid;
+        }
+        .printPromo p {
+          margin: 0 0 5pt;
+          font-size: 9pt;
+          color: #444;
+        }
+        .printPromoUrl {
+          font-size: 11pt;
+          font-weight: 800;
+          color: #0a58ca !important;
+          text-decoration: underline !important;
+          letter-spacing: -0.01em;
+        }
       }
     </style>
 
@@ -726,6 +753,11 @@
           </div>
         </section>
 
+        <div class="printPromo" id="printPromo" aria-hidden="true">
+          <p data-i18n="printPromoText">Meer weten? Bekijk de interactieve versie van dit CV online op:</p>
+          <a class="printPromoUrl" href="https://jesperrunneboom.github.io/">jesperrunneboom.github.io</a>
+        </div>
+
         <footer>
           <span>© <span id="year"></span> Jesper Runneboom</span>
           <span class="muted">GitHub Pages • <a href="#" id="backToTop" data-i18n="backToTop">Naar boven</a></span>
@@ -794,6 +826,7 @@
           parApp: "Aanpak",
           parRes: "Resultaat",
           skipLink: "Direct naar inhoud",
+          printPromoText: "Meer weten? Bekijk de interactieve versie van dit CV online op:",
         },
         en: {
           subtitle: "IT Project Manager \u2022 Team Leadership \u2022 Public sector",
@@ -851,6 +884,7 @@
           parApp: "Approach",
           parRes: "Result",
           skipLink: "Skip to content",
+          printPromoText: "Want to know more? View the interactive version of this CV online at:",
         }
       };
 
@@ -923,6 +957,7 @@
         setI18n(document.querySelector("[data-i18n='backToTop']"), "backToTop", lang);
         setI18n(document.querySelector("[data-i18n='pdfBtn']"), "pdfBtn", lang);
         setI18n(document.querySelector("[data-i18n='skipLink']"), "skipLink", lang);
+        setI18n(document.querySelector("[data-i18n='printPromoText']"), "printPromoText", lang);
 
         document.querySelectorAll("[data-i18n='parProb']").forEach(el => el.textContent = t.parProb);
         document.querySelectorAll("[data-i18n='parApp']").forEach(el => el.textContent = t.parApp);
