@@ -330,10 +330,8 @@
 
       .entryHead {
         display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        flex-wrap: wrap;
-        align-items: baseline;
+        flex-direction: column;
+        gap: 4px;
       }
 
       .role {
@@ -345,10 +343,8 @@
       .org { color: var(--fg); font-weight: 900; }
 
       .whenWhere {
-        font-family: var(--mono);
         font-size: 0.92rem;
         color: var(--muted);
-        white-space: nowrap;
       }
 
       .context {
@@ -373,9 +369,8 @@
 
       .parLabel {
         display: inline-block;
-        font-family: var(--mono);
-        font-size: 0.82rem;
-        letter-spacing: 0.05em;
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
         text-transform: uppercase;
         color: var(--muted);
         padding: 2px 8px;
@@ -406,7 +401,6 @@
       .certItem:last-child { border-bottom: none; }
       .certName { font-weight: 700; }
       .certOrg {
-        font-family: var(--mono);
         font-size: 0.92rem;
         color: var(--muted);
       }
@@ -669,52 +663,6 @@
           <div class="sectionDivider" aria-hidden="true"></div>
         </section>
 
-        <section aria-labelledby="education">
-          <div class="sectionTitle">
-            <h2 id="education" data-i18n="eduTitle">Opleiding</h2>
-          </div>
-
-          <ul class="certList">
-            <li class="certItem">
-              <span class="certName" data-i18n="edu1Name">MA Geschiedenis</span>
-              <span class="certOrg" data-i18n="edu1Org">Rijksuniversiteit Groningen</span>
-            </li>
-            <li class="certItem">
-              <span class="certName" data-i18n="edu2Name">BA Geschiedenis</span>
-              <span class="certOrg" data-i18n="edu2Org">Rijksuniversiteit Groningen</span>
-            </li>
-            <li class="certItem">
-              <span class="certName" data-i18n="edu3Name">HBO Propedeuse Sociaal Werk</span>
-              <span class="certOrg" data-i18n="edu3Org">Hanzehogeschool Groningen</span>
-            </li>
-            <li class="certItem">
-              <span class="certName" data-i18n="edu4Name">MBO Grafisch Design</span>
-              <span class="certOrg" data-i18n="edu4Org">Deltion College, Zwolle</span>
-            </li>
-          </ul>
-
-          <div class="sectionDivider" aria-hidden="true"></div>
-        </section>
-
-        <section aria-labelledby="certifications">
-          <div class="sectionTitle">
-            <h2 id="certifications" data-i18n="certTitle">Certificeringen</h2>
-            <span class="sectionNote" data-i18n="certNote">behaald</span>
-          </div>
-
-          <ul class="certList">
-            <li class="certItem">
-              <span class="certName" data-i18n="cert1Name">PRINCE2 Foundation</span>
-              <span class="certOrg" data-i18n="cert1Org">PeopleCert / AXELOS</span>
-            </li>
-            <li class="certItem">
-              <span class="certName" data-i18n="cert2Name">Rijbewijs B</span>
-            </li>
-          </ul>
-
-          <div class="sectionDivider" aria-hidden="true"></div>
-        </section>
-
         <section aria-labelledby="experience">
           <div class="sectionTitle">
             <h2 id="experience" data-i18n="expTitle">Ervaring</h2>
@@ -793,6 +741,62 @@
           </div>
         </section>
 
+        <div class="sectionDivider" aria-hidden="true"></div>
+
+        <section aria-labelledby="education">
+          <div class="sectionTitle">
+            <h2 id="education" data-i18n="eduTitle">Opleiding</h2>
+          </div>
+
+          <div class="timeline">
+            <article class="entry">
+              <div class="entryHead">
+                <p class="role"><span class="org" data-i18n="edu1Name">MA Geschiedenis</span></p>
+                <span class="whenWhere" data-i18n="edu1Org">2021–2023 · Rijksuniversiteit Groningen</span>
+              </div>
+            </article>
+            <article class="entry">
+              <div class="entryHead">
+                <p class="role"><span class="org" data-i18n="edu2Name">BA Geschiedenis</span></p>
+                <span class="whenWhere" data-i18n="edu2Org">2017–2022 · Rijksuniversiteit Groningen</span>
+              </div>
+            </article>
+            <article class="entry">
+              <div class="entryHead">
+                <p class="role"><span class="org" data-i18n="edu3Name">HBO Propedeuse Sociaal Werk</span></p>
+                <span class="whenWhere" data-i18n="edu3Org">2016–2017 · Hanzehogeschool Groningen</span>
+              </div>
+            </article>
+            <article class="entry">
+              <div class="entryHead">
+                <p class="role"><span class="org" data-i18n="edu4Name">MBO Grafisch Design</span></p>
+                <span class="whenWhere" data-i18n="edu4Org">2012–2016 · Deltion College, Zwolle</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="sectionDivider" aria-hidden="true"></div>
+        </section>
+
+        <section aria-labelledby="certifications">
+          <div class="sectionTitle">
+            <h2 id="certifications" data-i18n="certTitle">Certificeringen</h2>
+            <span class="sectionNote" data-i18n="certNote">behaald</span>
+          </div>
+
+          <ul class="certList">
+            <li class="certItem">
+              <span class="certName" data-i18n="cert1Name">PRINCE2 Foundation</span>
+              <span class="certOrg" data-i18n="cert1Org">PeopleCert / AXELOS</span>
+            </li>
+            <li class="certItem">
+              <span class="certName" data-i18n="cert2Name">Rijbewijs B</span>
+            </li>
+          </ul>
+
+          <div class="sectionDivider" aria-hidden="true"></div>
+        </section>
+
         <div class="printPromo" id="printPromo" aria-hidden="true">
           <p data-i18n="printPromoText">Meer weten? Bekijk de interactieve versie van dit CV online op:</p>
           <a class="printPromoUrl" href="https://jesperrunneboom.github.io/">jesperrunneboom.github.io</a>
@@ -850,13 +854,13 @@
           pdfBtn: "Download PDF",
           eduTitle: "Opleiding",
           edu1Name: "MA Geschiedenis",
-          edu1Org: "Rijksuniversiteit Groningen",
+          edu1Org: "2021–2023 · Rijksuniversiteit Groningen",
           edu2Name: "BA Geschiedenis",
-          edu2Org: "Rijksuniversiteit Groningen",
+          edu2Org: "2017–2022 · Rijksuniversiteit Groningen",
           edu3Name: "HBO Propedeuse Sociaal Werk",
-          edu3Org: "Hanzehogeschool Groningen",
+          edu3Org: "2016–2017 · Hanzehogeschool Groningen",
           edu4Name: "MBO Grafisch Design",
-          edu4Org: "Deltion College, Zwolle",
+          edu4Org: "2012–2016 · Deltion College, Zwolle",
           certTitle: "Certificeringen",
           certNote: "behaald",
           cert1Name: "PRINCE2 Foundation",
@@ -908,13 +912,13 @@
           pdfBtn: "Download PDF",
           eduTitle: "Education",
           edu1Name: "MA History",
-          edu1Org: "University of Groningen",
+          edu1Org: "2021–2023 · University of Groningen",
           edu2Name: "BA History",
-          edu2Org: "University of Groningen",
+          edu2Org: "2017–2022 · University of Groningen",
           edu3Name: "HBO Propaedeutic Social Work",
-          edu3Org: "Hanze University of Applied Sciences, Groningen",
+          edu3Org: "2016–2017 · Hanze University of Applied Sciences, Groningen",
           edu4Name: "MBO Graphic Design",
-          edu4Org: "Deltion College, Zwolle",
+          edu4Org: "2012–2016 · Deltion College, Zwolle",
           certTitle: "Certifications",
           certNote: "obtained",
           cert1Name: "PRINCE2 Foundation",
