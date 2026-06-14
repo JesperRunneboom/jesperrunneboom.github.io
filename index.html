@@ -253,9 +253,8 @@
 
       .sectionTitle {
         display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 12px;
+        flex-direction: column;
+        gap: 2px;
         margin: 0 0 8px;
       }
 
@@ -266,7 +265,7 @@
         font-weight: 700;
       }
 
-      .sectionNote { color: var(--muted); font-size: 0.95rem; }
+      .sectionNote { color: var(--muted); font-size: 0.88rem; }
 
       .sectionDivider {
         border-top: 1px solid var(--hairline);
@@ -287,6 +286,22 @@
         padding-left: 18px;
       }
       .bullets li { margin: 6px 0; }
+
+      .accentBullets {
+        list-style: none;
+        padding-left: 0;
+        margin: 10px 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .accentBullets li {
+        border-left: 2px solid rgba(10, 88, 202, 0.28);
+        padding: 2px 0 2px 12px;
+      }
+      [data-theme="dark"] .accentBullets li {
+        border-left-color: rgba(122, 183, 255, 0.28);
+      }
 
       .timeline {
         position: relative;
@@ -591,6 +606,7 @@
 
               <div class="tags" aria-label="Snelle samenvatting">
                 <span class="tag">PRINCE2</span>
+                <span class="tag">Rijbewijs B</span>
                 <span class="tag">Zaaksystemen (Mozard/Atabase)</span>
                 <span class="tag">Generalist</span>
                 <span class="tag">Jira</span>
@@ -618,21 +634,6 @@
 
         <div class="rule" aria-hidden="true"></div>
 
-        <section aria-labelledby="results">
-          <div class="sectionTitle">
-            <h2 id="results" data-i18n="resultsTitle">Wat je aan mij hebt</h2>
-            <span class="sectionNote" data-i18n="resultsNote">kort en concreet</span>
-          </div>
-
-          <ul class="bullets">
-            <li data-i18n="result1"><strong>Sturing aan development teams</strong><br>onduidelijkheden wegnemen, vooruitplannen en het overzicht bewaren zodat het team weet wat er nodig is en effectief kan leveren.</li>
-            <li data-i18n="result2"><strong>Eerste aanspreekpunt voor de publieke sector</strong><br>van het Ministerie tot omgevingsdiensten en gemeenten vertaal ik behoeften naar concrete acties en houd ik alle partijen op één lijn.</li>
-            <li data-i18n="result3"><strong>Grip op besluitvorming en overdracht</strong><br>besluiten en voortgang gestructureerd gedocumenteerd, risico's zichtbaar en een nette oplevering met documentatie die beheer overdraagbaar maakt.</li>
-          </ul>
-
-          <div class="sectionDivider" aria-hidden="true"></div>
-        </section>
-
         <section aria-labelledby="skills">
           <div class="sectionTitle">
             <h2 id="skills" data-i18n="skillsTitle">Kerncompetenties</h2>
@@ -641,16 +642,16 @@
 
           <div class="twoCol">
             <div>
-              <ul class="bullets">
+              <ul class="accentBullets">
                 <li data-i18n="skill1">Sturing van development teams in samenspel met technisch verantwoordelijken</li>
                 <li data-i18n="skill2">Verbinding tussen management, development en uitvoering</li>
                 <li data-i18n="skill3">Planning en voortgangsbeheer: scope, prioriteiten en afhankelijkheden</li>
                 <li data-i18n="skill4">Gestructureerd documenteren en rapporteren: besluiten, risico's en overdracht</li>
-                <li data-i18n="skill5">Zaaksystemen, VTH-processen en migratietrajecten</li>
+                <li data-i18n="skill5">Zaaksystemen (Mozard, Atabase), VTH-processen en implementatietrajecten</li>
               </ul>
             </div>
             <div>
-              <ul class="bullets">
+              <ul class="accentBullets">
                 <li data-i18n="skill6">DMS en archiefsystemen</li>
                 <li>M365</li>
                 <li>Jira</li>
@@ -774,25 +775,6 @@
               </div>
             </article>
           </div>
-
-          <div class="sectionDivider" aria-hidden="true"></div>
-        </section>
-
-        <section aria-labelledby="certifications">
-          <div class="sectionTitle">
-            <h2 id="certifications" data-i18n="certTitle">Certificeringen</h2>
-            <span class="sectionNote" data-i18n="certNote">behaald</span>
-          </div>
-
-          <ul class="certList">
-            <li class="certItem">
-              <span class="certName" data-i18n="cert1Name">PRINCE2 Foundation</span>
-              <span class="certOrg" data-i18n="cert1Org">PeopleCert / AXELOS</span>
-            </li>
-            <li class="certItem">
-              <span class="certName" data-i18n="cert2Name">Rijbewijs B</span>
-            </li>
-          </ul>
 
           <div class="sectionDivider" aria-hidden="true"></div>
         </section>
