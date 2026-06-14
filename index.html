@@ -510,7 +510,8 @@
         .parBlock { border-left-color: #999 !important; }
 
         /* Voorkom paginaonderbrekingen binnen blokken */
-        .entry, .certItem, footer { break-inside: avoid; page-break-inside: avoid; }
+        .parBlock, .certItem, footer { break-inside: avoid; page-break-inside: avoid; }
+        .entryHead { break-after: avoid; page-break-after: avoid; }
         .printBreakBefore { break-before: page; page-break-before: always; }
 
         .printPromo {
