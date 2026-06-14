@@ -33,7 +33,8 @@
 
     <style>
       :root {
-        --bg: #fbfbfd;
+        --bg: #ffffff;
+        --canvas: #e8eaed;
         --fg: #0f172a;
         --muted: rgba(15, 23, 42, 0.72);
 
@@ -49,10 +50,12 @@
         --ring: 0 0 0 3px rgba(10, 88, 202, 0.22);
 
         --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        --paper-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
       }
 
       [data-theme="dark"] {
         --bg: #0b1020;
+        --canvas: #060a14;
         --fg: #e7eaf0;
         --muted: rgba(231, 234, 240, 0.72);
 
@@ -61,6 +64,7 @@
 
         --link: #7ab7ff;
         --ring: 0 0 0 3px rgba(122, 183, 255, 0.20);
+        --paper-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
       }
 
       * { box-sizing: border-box; }
@@ -69,7 +73,7 @@
 
       body {
         margin: 0;
-        background: var(--bg);
+        background: var(--canvas);
         color: var(--fg);
         font-family: 'Google Sans', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
           "Segoe UI Emoji";
@@ -84,7 +88,10 @@
       .container {
         max-width: var(--max);
         margin: 0 auto;
-        padding: 28px 16px 64px;
+        padding: 28px 32px 64px;
+        background: var(--bg);
+        box-shadow: var(--paper-shadow);
+        min-height: 100vh;
       }
 
       .skipLink {
@@ -103,8 +110,8 @@
         position: sticky;
         top: 0;
         z-index: 50;
-        background: var(--bg);
-        border-bottom: 1px solid var(--hairline);
+        background: var(--canvas);
+        border-bottom: 1px solid transparent;
       }
 
       .topbar {
@@ -227,12 +234,17 @@
         margin-top: 10px;
       }
       .tag {
-        font-family: var(--mono);
-        font-size: 0.9rem;
-        padding: 4px 10px;
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 500;
+        padding: 4px 12px;
+        border: 1px solid rgba(10, 88, 202, 0.2);
+        border-radius: 20px;
+        color: var(--link);
+        background: rgba(10, 88, 202, 0.06);
+      }
+      [data-theme="dark"] .tag {
+        border-color: rgba(122, 183, 255, 0.2);
+        background: rgba(122, 183, 255, 0.07);
       }
 
       .rule { border-top: 1px solid var(--hairline); margin: 18px 0 10px; }
@@ -249,10 +261,9 @@
 
       h2 {
         margin: 0;
-        font-size: 1.05rem;
-        letter-spacing: 0.01em;
-        text-transform: uppercase;
-        font-weight: 800;
+        font-size: 1.1rem;
+        letter-spacing: -0.01em;
+        font-weight: 700;
       }
 
       .sectionNote { color: var(--muted); font-size: 0.95rem; }
@@ -462,6 +473,7 @@
         .topbarWrap, .skipLink, .progressBar { display: none !important; }
         .fadeIn { opacity: 1 !important; transform: none !important; transition: none !important; }
         body { background: #fff !important; color: #000 !important; font-size: 11pt; line-height: 1.35; }
+        .container { background: #fff !important; box-shadow: none !important; padding: 0 !important; }
         a { color: #000 !important; text-decoration: none !important; }
 
         .container { max-width: 780px; padding: 0 !important; }
