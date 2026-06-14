@@ -481,19 +481,15 @@
         .progressBar { transition: none !important; }
       }
 
-      .printPromo { display: none; }
-
       @page { size: A4; margin: 10mm; }
 
       @media print {
         .topbarWrap, .skipLink, .progressBar { display: none !important; }
         .fadeIn { opacity: 1 !important; transform: none !important; transition: none !important; }
-        body { background: #fff !important; color: #000 !important; font-size: 11pt; line-height: 1.35; }
-        .container { background: #fff !important; box-shadow: none !important; padding: 0 !important; }
-        a { color: #000 !important; text-decoration: none !important; }
 
-        .container { max-width: 780px; padding: 0 !important; }
-        .twoCol { grid-template-columns: 1fr !important; gap: 10px !important; }
+        body { background: #fff !important; color: #000 !important; font-size: 11pt; line-height: 1.35; }
+        .container { background: #fff !important; box-shadow: none !important; padding: 0 !important; max-width: 780px; }
+        a { color: #000 !important; text-decoration: none !important; }
 
         .hero {
           grid-template-columns: 1fr 210px !important;
@@ -506,9 +502,15 @@
           min-height: 240px !important;
         }
 
-        .calloutActions { display: none !important; }
+        /* Tags: geen achtergrondkleur, gewone rand */
+        .tag { background: none !important; border-color: #999 !important; color: #333 !important; }
 
-        .entry, footer { break-inside: avoid; page-break-inside: avoid; }
+        /* Accentranden leesbaar in zwart-wit */
+        .accentBullets li { border-left-color: #999 !important; }
+        .parBlock { border-left-color: #999 !important; }
+
+        /* Voorkom paginaonderbrekingen binnen blokken */
+        .entry, .certItem, footer { break-inside: avoid; page-break-inside: avoid; }
         .printBreakBefore { break-before: page; page-break-before: always; }
 
         .printPromo {
