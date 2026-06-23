@@ -489,9 +489,9 @@
         .topbarWrap, .skipLink, .progressBar { display: none !important; }
         .fadeIn { opacity: 1 !important; transform: none !important; transition: none !important; }
 
-        body { background: #fff !important; color: #000 !important; font-size: 11pt; line-height: 1.35; }
+        body { background: #fff !important; font-size: 11pt; line-height: 1.35; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
         .container { background: #fff !important; box-shadow: none !important; padding: 10mm 0 0 !important; max-width: 780px; }
-        a { color: #000 !important; text-decoration: none !important; }
+        a { text-decoration: none !important; }
 
         .hero {
           grid-template-columns: 1fr 210px !important;
@@ -503,13 +503,6 @@
           height: 240px !important;
           min-height: 240px !important;
         }
-
-        /* Tags: geen achtergrondkleur, gewone rand */
-        .tag { background: none !important; border-color: #999 !important; color: #333 !important; }
-
-        /* Accentranden leesbaar in zwart-wit */
-        .accentBullets li { border-left-color: #999 !important; }
-        .parBlock { border-left-color: #999 !important; }
 
         /* Voorkom paginaonderbrekingen binnen blokken */
         .parBlock, .certItem, footer { break-inside: avoid; page-break-inside: avoid; }
